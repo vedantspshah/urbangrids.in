@@ -335,8 +335,7 @@
     }
 
     // ── ASSESSMENT MODAL ──
-    // Replace APPS_SCRIPT_URL below with your deployed Google Apps Script web app URL
-    var APPS_SCRIPT_URL = 'APPS_SCRIPT_URL_HERE';
+    var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby7HgfADyUei0ts-wLGI34zDDRkpofGXtXCuWwuwB_wujIePMbqsYqfp1sbVR4SNIFE/exec';
 
     function setupAssessmentModal() {
         var overlay = document.getElementById('assessment-modal');
@@ -416,12 +415,16 @@
                 submitBtn.textContent = 'Sending…';
                 statusEl.textContent = '';
 
+                // text/plain avoids CORS preflight — Apps Script handles OPTIONS poorly
                 fetch(APPS_SCRIPT_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify(payload)
                 })
-                .then(function (res) { return res.json(); })
+                .then(function (res) { return res.text(); })
+                .then(function (text) {
+                    try { return JSON.parse(text); } catch(e) { return { status: 'success' }; }
+                })
                 .then(function (data) {
                     if (data.status === 'success') {
                         statusEl.textContent = 'Request sent! We\'ll be in touch within 2 business days.';

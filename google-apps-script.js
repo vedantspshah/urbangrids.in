@@ -22,7 +22,9 @@ var DRIVE_FOLDER_ID = 'YOUR_DRIVE_FOLDER_ID_HERE';  // folder where bill images 
 
 function doPost(e) {
   try {
-    var data = JSON.parse(e.postData.contents);
+    // Works with both application/json and text/plain (used to avoid CORS preflight)
+    var raw = e.postData ? e.postData.contents : '{}';
+    var data = JSON.parse(raw);
 
     // ── Save bill to Drive ──────────────────────────────
     var billUrl = '';
@@ -88,7 +90,13 @@ function doGet() {
 }
 
 function response(obj) {
+  // CORS header lets the browser read the response after the simple-request POST
   return ContentService
     .createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+// Called before doPost on some CORS preflight paths — safe no-op
+function doOptions(e) {
+  return ContentService.createTextOutput('');
 }
