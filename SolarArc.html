@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>UrbanGrid — Commercial & Industrial Solar EPC</title>
+    <meta name="description" content="Turnkey Commercial & Industrial Solar EPC Solutions. Engineering, Procurement, Construction — from 30kW to Multi-Megawatt deployments.">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+/* ═══════════════════════════════════════════════════
+   SOLARARC — Full-Scroll Cinematic Solar Website
+   Animation IS the website. Content synced to frames.
+   ═══════════════════════════════════════════════════ */
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #0a0a0a;
+    --text: #f5f5f7;
+    --text-dim: rgba(245, 245, 247, 0.55);
+    --text-muted: rgba(245, 245, 247, 0.3);
+    --accent: #e8a910;
+    --accent-warm: #f5c842;
+    --accent-glow: rgba(232, 169, 16, 0.12);
+    --border: rgba(255, 255, 255, 0.08);
+    --glass: rgba(0, 0, 0, 0.45);
+    --glass-border: rgba(255, 255, 255, 0.06);
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'Space Grotesk', 'Inter', sans-serif;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --vh100: 100vh;
+}
+
+@supports (height: 100dvh) {
+    :root { --vh100: 100dvh; }
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    overscroll-behavior: none;
+}
+
+/* ─── NAVIGATION ─── */
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: env(safe-area-inset-top, 0px) clamp(20px, 4vw, 60px) 0;
+    transition: background 0.5s ease, backdrop-filter 0.5s ease;
+}
+
+.nav.scrolled {
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.nav-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.nav-link {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-dim);
+    transition: color 0.3s ease;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.nav-link:hover { color: var(--text); }
+
+.nav-link-cta {
+    color: var(--bg);
+    background: var(--text);
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.nav-link-cta:hover {
+    background: var(--accent-warm);
+    color: var(--bg);
+}
+
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+    position: relative;
+}
+
+.nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--text);
+    position: absolute;
+    left: 11px;
+    transition: all 0.3s var(--ease);
+}
+
+.nav-toggle span:first-child { top: 17px; }
+.nav-toggle span:last-child { top: 25px; }
+
+.nav-toggle.active span:first-child { top: 21px; transform: rotate(45deg); }
+.nav-toggle.active span:last-child { top: 21px; transform: rotate(-45deg); }
+
+/* ─── SCROLL CONTAINER ─── */
+.scroll-container {
+    position: relative;
+    /* Height = enough scroll distance for all slides */
+    /* Each slide gets ~12.5% of scroll, 8 slides ≈ 100% */
+    height: 1200vh;
+    touch-action: pan-y;
+}
+
+/* ─── STICKY CANVAS ─── */
+.canvas-wrap {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: var(--vh100);
+    z-index: 1;
+    overflow: hidden;
+}
+
+#hero-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.canvas-dim {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    pointer-events: none;
+    transition: background 0.15s linear;
+}
+
+/* ─── SLIDES (Content overlays) ─── */
+.slide {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--vh100);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    transition: none; /* JS controls opacity directly for smoothness */
+}
+
+.slide-inner {
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 clamp(32px, 5vw, 80px);
+}
+
+/* Alignment variants */
+.slide-left { text-align: left; }
+.slide-right { text-align: left; margin-left: auto; display: flex; justify-content: flex-end; }
+.slide-right > * { max-width: 600px; }
+.slide-center { text-align: center; display: flex; flex-direction: column; align-items: center; }
+
+/* ─── SLIDE TYPOGRAPHY ─── */
+.slide-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-warm);
+    margin-bottom: 18px;
+}
+
+.slide-headline {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 6vw, 5.2rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    margin-bottom: 24px;
+    max-width: 800px;
+}
+
+.text-accent {
+    background: linear-gradient(135deg, var(--accent-warm) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.slide-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+    max-width: 650px;
+}
+
+.slide-title-large {
+    font-size: clamp(2.4rem, 5vw, 4rem);
+}
+
+.slide-sub {
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    color: var(--text-dim);
+    font-weight: 400;
+}
+
+.slide-body {
+    font-size: 1rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+    max-width: 480px;
+    margin-bottom: 28px;
+}
+
+.slide-body-center {
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ─── LANDING HERO LAYOUT ─── */
+.slide-landing-layout {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    height: var(--vh100);
+    padding-top: 90px;
+    padding-bottom: 80px;
+    position: relative;
+    gap: 40px;
+}
+
+.landing-left {
+    max-width: 750px;
+}
+
+.landing-right {
+    opacity: 0;
+    transform: translateX(24px);
+    animation: landingSlideIn 0.9s var(--ease) 1.2s forwards;
+}
+
+@keyframes landingSlideIn {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Staggered entrance animations */
+.landing-label {
+    opacity: 0;
+    transform: translateY(24px);
+    animation: landingFadeIn 0.9s var(--ease) 0.3s forwards;
+}
+
+.landing-headline {
+    opacity: 0;
+    transform: translateY(32px);
+    animation: landingFadeIn 1s var(--ease) 0.5s forwards;
+}
+
+.landing-sub {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: landingFadeIn 0.8s var(--ease) 0.8s forwards;
+    margin-bottom: 32px;
+}
+
+.landing-cta-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: landingFadeIn 0.8s var(--ease) 1.0s forwards;
+}
+
+@keyframes landingFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ─── VERTICAL STATS (Right Column) ─── */
+.stats-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 24px 28px;
+    min-width: 180px;
+}
+
+.stat-v {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    padding: 12px 0;
+}
+
+.stat-v-num {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    line-height: 1;
+}
+
+.stat-v-label {
+    font-size: 0.62rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.stat-v-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* ─── SCROLL HINT ─── */
+.hero-scroll-hint {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    animation: landingFadeIn 0.6s var(--ease) 1.6s forwards;
+    grid-column: 1 / -1;
+}
+
+.scroll-line-anim {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.45), transparent);
+    animation: scrollPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+    0%, 100% { opacity: 0.2; transform: scaleY(0.5); }
+    50% { opacity: 1; transform: scaleY(1); }
+}
+
+.hero-scroll-hint span {
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* ─── SERVICES MINI GRID ─── */
+.slide-grid-services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 12px;
+    margin-top: 28px;
+    max-width: 600px;
+}
+
+.mini-card {
+    background: var(--glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 18px 16px;
+}
+
+.mini-card h4 {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text);
+}
+
+.mini-card p {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    line-height: 1.45;
+}
+
+/* ─── MODEL BADGE ─── */
+.model-badge-inline {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    padding: 6px 18px;
+    border-radius: 100px;
+    margin-bottom: 22px;
+}
+
+.model-badge-accent {
+    background: var(--accent-glow);
+    border-color: rgba(232, 169, 16, 0.18);
+    color: var(--accent-warm);
+}
+
+/* ─── FEATURE LIST ─── */
+.feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+}
+
+.feat-arrow {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+/* ─── LIFECYCLE STRIP ─── */
+.lifecycle-strip {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-top: 40px;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+.lc-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 0 clamp(8px, 1.5vw, 20px);
+}
+
+.lc-num {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-glow);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid rgba(232, 169, 16, 0.2);
+}
+
+.lc-name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    white-space: normal;
+    text-align: center;
+    max-width: 64px;
+}
+
+.lc-divider {
+    width: clamp(16px, 3vw, 40px);
+    height: 1px;
+    background: var(--border);
+    flex-shrink: 0;
+}
+
+/* ─── INDUSTRY CHIPS ─── */
+.industry-chips {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 28px;
+    max-width: 520px;
+}
+
+.ind-chip {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 18px 16px;
+}
+
+.ind-chip svg {
+    flex-shrink: 0;
+    color: var(--accent);
+    margin-top: 2px;
+}
+
+.ind-chip h5 {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.ind-chip p {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    line-height: 1.4;
+}
+
+/* ─── IMPACT ROW ─── */
+.impact-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 40px;
+    max-width: 900px;
+    width: 100%;
+}
+
+.impact-block {
+    background: var(--glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 28px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.impact-number {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--text);
+}
+
+.impact-suffix {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    font-weight: 500;
+    color: var(--accent);
+}
+
+.impact-label {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 6px;
+}
+
+/* ─── CTA BUTTONS ─── */
+.cta-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 32px;
+    border-radius: 100px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: all 0.35s var(--ease);
+    border: none;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: var(--text);
+    color: var(--bg);
+}
+
+.btn-primary:hover {
+    background: var(--accent-warm);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(232, 169, 16, 0.25);
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+.btn-ghost:hover {
+    border-color: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.04);
+    transform: translateY(-2px);
+}
+
+.btn-lg {
+    padding: 18px 40px;
+    font-size: 0.95rem;
+}
+
+/* ─── PROGRESS BAR ─── */
+.progress-track {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(255,255,255,0.04);
+    z-index: 100;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-warm));
+    will-change: width;
+}
+
+/* ─── FOOTER ─── */
+.footer {
+    background: #0d0d0d;
+    border-top: 1px solid var(--border);
+    padding: 60px clamp(24px, 5vw, 80px) 36px;
+}
+
+.footer-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.5fr 2fr;
+    gap: 60px;
+    margin-bottom: 48px;
+}
+
+.footer-brand p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-top: 14px;
+}
+
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+
+.footer-col h5 {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+}
+
+.footer-col a {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    padding: 8px 0;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.footer-col a:hover { color: var(--text); }
+
+.footer-bottom {
+    max-width: 1320px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+}
+
+.footer-bottom p {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.footer-legal {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-legal a {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-legal a:hover { color: var(--text); }
+
+/* ─── WHATSAPP FLOAT BUTTON ─── */
+.whatsapp-btn {
+    position: fixed;
+    bottom: 28px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-decoration: none;
+    z-index: 500;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+    transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+.whatsapp-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 28px rgba(37, 211, 102, 0.6);
+}
+
+.whatsapp-btn svg {
+    display: block;
+    flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+    .impact-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .lifecycle-strip {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .lc-divider {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    /* ── NAV ── */
+    .nav-links {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: var(--vh100);
+        background: rgba(10, 10, 10, 0.97);
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 24px;
+        z-index: 999;
+    }
+    .nav-links.open { display: flex; }
+    .nav-link { font-size: 1.15rem; padding: 12px 24px; }
+    .nav-toggle { display: block; z-index: 1001; }
+
+    /* ── TYPOGRAPHY SCALE-DOWN ── */
+    .slide-headline { font-size: clamp(1.8rem, 7.5vw, 2.8rem); }
+    .slide-title { font-size: clamp(1.45rem, 5.5vw, 2rem); margin-bottom: 12px; }
+    .slide-title-large { font-size: clamp(1.8rem, 6.5vw, 2.4rem); }
+    .slide-label { margin-bottom: 10px; }
+    .slide-body { margin-bottom: 16px; }
+
+    /* ── SLIDE ALIGNMENT — block layout on mobile, not flex-end ── */
+    .slide-right {
+        display: block;
+        justify-content: flex-start;
+        margin-left: 0;
+    }
+    .slide-right > * { max-width: 100%; }
+
+    /* ── LANDING HERO ── */
+    .slide-landing-layout {
+        grid-template-columns: 1fr;
+        padding-top: 80px;
+        padding-bottom: 60px;
+        gap: 20px;
+        overflow: hidden;
+    }
+    .landing-right { justify-self: flex-start; }
+    .stats-vertical {
+        flex-direction: row;
+        align-items: center;
+        min-width: auto;
+    }
+    .stat-v { align-items: center; padding: 8px 12px; }
+    .stat-v-divider { width: 1px; height: 28px; }
+    .stat-v-label { white-space: normal; }
+    .landing-cta-row { flex-direction: column; align-items: stretch; }
+
+    /* ── SERVICES GRID ── */
+    .slide-grid-services {
+        grid-template-columns: 1fr 1fr;
+        max-width: 100%;
+        margin-top: 16px;
+        gap: 8px;
+    }
+
+    /* ── FEATURE LIST ── */
+    .feature-list { gap: 8px; }
+    .feature-list li { font-size: 0.85rem; }
+
+    /* ── LIFECYCLE — 3-column grid instead of flex row ── */
+    .lifecycle-strip {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 20px;
+        flex-wrap: unset;
+        justify-content: unset;
+    }
+    .lc-step { padding: 8px 0; }
+    .lc-divider { display: none; }
+
+    /* ── INDUSTRIES ── */
+    .industry-chips {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+        margin-top: 16px;
+    }
+
+    /* ── IMPACT ── */
+    .impact-row {
+        grid-template-columns: 1fr 1fr;
+        max-width: 100%;
+        margin-top: 20px;
+        gap: 12px;
+    }
+    .impact-block { padding: 20px 12px; }
+
+    /* ── CTA BUTTONS ── */
+    .cta-row { flex-direction: column; align-items: stretch; gap: 12px; }
+    .cta-row .btn { width: 100%; }
+
+    /* ── FOOTER ── */
+    .footer-inner { grid-template-columns: 1fr; gap: 36px; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+
+    /* ── WHATSAPP BUTTON ── */
+    .whatsapp-btn { bottom: 20px; right: 16px; width: 52px; height: 52px; }
+}
+
+@media (max-width: 768px) and (max-height: 600px) {
+    .landing-right { display: none; }
+}
+
+@media (max-width: 480px) {
+    .slide-inner {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .slide-grid-services {
+        grid-template-columns: 1fr;
+    }
+
+    .impact-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .impact-block {
+        padding: 16px 12px;
+    }
+
+    .lifecycle-strip {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .footer-links {
+        grid-template-columns: 1fr;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav id="main-nav" class="nav">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo" id="nav-logo">
+                <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M16 4L16 28M4 16L28 16M7.5 7.5L24.5 24.5M24.5 7.5L7.5 24.5" stroke="currentColor" stroke-width="0.7" opacity="0.4"/>
+                    <circle cx="16" cy="16" r="4" fill="currentColor"/>
+                </svg>
+                <span>UrbanGrid</span>
+            </a>
+            <div class="nav-links" id="nav-links">
+                <a href="#" class="nav-link" data-scroll-to="0">Home</a>
+                <a href="#" class="nav-link" data-scroll-to="0.12">Solutions</a>
+                <a href="#" class="nav-link" data-scroll-to="0.30">Models</a>
+                <a href="#" class="nav-link" data-scroll-to="0.50">Process</a>
+                <a href="#" class="nav-link" data-scroll-to="0.65">Industries</a>
+                <a href="#" class="nav-link" data-scroll-to="0.78">Impact</a>
+                <a href="#" class="nav-link nav-link-cta" data-scroll-to="0.92">Get Assessment</a>
+            </div>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+                <span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- FULL-PAGE SCROLL CONTAINER -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div id="scroll-container" class="scroll-container">
+
+        <!-- Sticky canvas background -->
+        <div class="canvas-wrap">
+            <canvas id="hero-canvas"></canvas>
+            <!-- Dimming overlay — increases as text appears -->
+            <div class="canvas-dim" id="canvas-dim"></div>
+        </div>
+
+        <!-- ═══════ SLIDE 0: Landing Hero (visible on load) ═══════ -->
+        <div class="slide slide-landing" id="slide-landing" data-enter="-0.01" data-peak="0.02" data-exit="0.13">
+            <div class="slide-inner slide-landing-layout" id="landing-parallax">
+                <!-- LEFT: Main hero content -->
+                <div class="landing-left">
+                    <p class="slide-label landing-label">Commercial & Industrial Solar EPC</p>
+                    <h1 class="slide-headline landing-headline" id="hero-headline">
+                        Powering Industry with<br>
+                        <span class="text-accent">Intelligent Solar<br>Infrastructure.</span>
+                    </h1>
+                    <p class="slide-sub landing-sub">Turnkey EPC Solutions · 30kW to Multi-Megawatt Deployments</p>
+                    <div class="landing-cta-row">
+                        <a href="#" class="btn btn-primary" data-scroll-to="0.12">Explore Solutions</a>
+                        <a href="#" class="btn btn-ghost" data-scroll-to="0.92">Request Assessment</a>
+                    </div>
+                </div>
+
+                <!-- RIGHT: Vertical stats column -->
+                <div class="landing-right" id="landing-stats">
+                    <div class="stats-vertical">
+                        <div class="stat-v">
+                            <span class="stat-v-num">60</span>
+                            <span class="stat-v-label">MW Deployed</span>
+                        </div>
+                        <div class="stat-v-divider"></div>
+                        <div class="stat-v">
+                            <span class="stat-v-num">40%</span>
+                            <span class="stat-v-label">Avg Cost Savings</span>
+                        </div>
+                        <div class="stat-v-divider"></div>
+                        <div class="stat-v">
+                            <span class="stat-v-num">99.5%</span>
+                            <span class="stat-v-label">Uptime SLA</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scroll hint -->
+                <div class="hero-scroll-hint" id="scroll-hint">
+                    <div class="scroll-line-anim"></div>
+                    <span>Scroll to explore</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ SLIDE 2: What We Do ═══════ -->
+        <div class="slide" data-enter="0.14" data-peak="0.19" data-exit="0.27">
+            <div class="slide-inner slide-right">
+                <p class="slide-label">What We Do</p>
+                <h2 class="slide-title">End-to-end solar EPC.<br>Zero compromise.</h2>
+                <div class="slide-grid-services">
+                    <div class="mini-card">
+                        <h4>Engineering</h4>
+                        <p>Precision system design, shadow mapping, yield simulation.</p>
+                    </div>
+                    <div class="mini-card">
+                        <h4>Procurement</h4>
+                        <p>Tier-1 modules, certified inverters, direct OEM partnerships.</p>
+                    </div>
+                    <div class="mini-card">
+                        <h4>Construction</h4>
+                        <p>Safety-compliant, modular installation. On-time, every time.</p>
+                    </div>
+                    <div class="mini-card">
+                        <h4>Grid Integration</h4>
+                        <p>Net-metering, interconnection, regulatory compliance.</p>
+                    </div>
+                    <div class="mini-card">
+                        <h4>O&M</h4>
+                        <p>24/7 monitoring, preventive maintenance, guaranteed output.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ SLIDE 3: CAPEX Model ═══════ -->
+        <div class="slide" data-enter="0.25" data-peak="0.32" data-exit="0.40">
+            <div class="slide-inner slide-left">
+                <p class="slide-label">Business Model</p>
+                <div class="model-badge-inline">CAPEX</div>
+                <h2 class="slide-title">Own Your Power.</h2>
+                <p class="slide-body">Full asset ownership with accelerated depreciation benefits and maximum long-term returns.</p>
+                <ul class="feature-list">
+                    <li><span class="feat-arrow">→</span> Upfront investment, complete ownership</li>
+                    <li><span class="feat-arrow">→</span> Accelerated depreciation (40% Year 1)</li>
+                    <li><span class="feat-arrow">→</span> 3–5 year payback period</li>
+                    <li><span class="feat-arrow">→</span> 25+ years of free energy</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════ SLIDE 4: RESCO Model ═══════ -->
+        <div class="slide" data-enter="0.37" data-peak="0.43" data-exit="0.50">
+            <div class="slide-inner slide-right">
+                <p class="slide-label">Business Model</p>
+                <div class="model-badge-inline model-badge-accent">RESCO / OPEX</div>
+                <h2 class="slide-title">Zero Capex Solar.</h2>
+                <p class="slide-body">No upfront investment. Fixed energy tariff. We build, own, and operate — you simply consume clean energy.</p>
+                <ul class="feature-list">
+                    <li><span class="feat-arrow">→</span> Zero upfront cost</li>
+                    <li><span class="feat-arrow">→</span> Fixed tariff via long-term PPA</li>
+                    <li><span class="feat-arrow">→</span> Fully managed system</li>
+                    <li><span class="feat-arrow">→</span> Immediate Day-1 savings</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════ SLIDE 5: Project Lifecycle ═══════ -->
+        <div class="slide" data-enter="0.47" data-peak="0.54" data-exit="0.63">
+            <div class="slide-inner slide-center">
+                <p class="slide-label">Process</p>
+                <h2 class="slide-title">From assessment to generation.<br>Seamlessly.</h2>
+                <div class="lifecycle-strip">
+                    <div class="lc-step">
+                        <span class="lc-num">01</span>
+                        <span class="lc-name">Site Assessment</span>
+                    </div>
+                    <div class="lc-divider"></div>
+                    <div class="lc-step">
+                        <span class="lc-num">02</span>
+                        <span class="lc-name">Design</span>
+                    </div>
+                    <div class="lc-divider"></div>
+                    <div class="lc-step">
+                        <span class="lc-num">03</span>
+                        <span class="lc-name">Procurement</span>
+                    </div>
+                    <div class="lc-divider"></div>
+                    <div class="lc-step">
+                        <span class="lc-num">04</span>
+                        <span class="lc-name">Construction</span>
+                    </div>
+                    <div class="lc-divider"></div>
+                    <div class="lc-step">
+                        <span class="lc-num">05</span>
+                        <span class="lc-name">Commissioning</span>
+                    </div>
+                    <div class="lc-divider"></div>
+                    <div class="lc-step">
+                        <span class="lc-num">06</span>
+                        <span class="lc-name">O&M</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ SLIDE 6: Industries ═══════ -->
+        <div class="slide" data-enter="0.60" data-peak="0.67" data-exit="0.76">
+            <div class="slide-inner slide-left">
+                <p class="slide-label">Industries</p>
+                <h2 class="slide-title">Built for the spaces that<br>power economies.</h2>
+                <div class="industry-chips">
+                    <div class="ind-chip">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M2 21V9l5-4v6l5-4v6l5-4v8" stroke="currentColor" stroke-width="1.2"/><path d="M2 21h20M22 21V5H17" stroke="currentColor" stroke-width="1.2"/></svg>
+                        <div>
+                            <h5>Manufacturing</h5>
+                            <p>High-load factories, rooftop & ground-mount</p>
+                        </div>
+                    </div>
+                    <div class="ind-chip">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M2 21V10L12 4l10 6v11" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="15" width="6" height="6" stroke="currentColor" stroke-width="1"/></svg>
+                        <div>
+                            <h5>Warehouses</h5>
+                            <p>Large roofs, cold storage & distribution</p>
+                        </div>
+                    </div>
+                    <div class="ind-chip">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="8" height="14" stroke="currentColor" stroke-width="1.2"/><rect x="14" y="4" width="8" height="17" stroke="currentColor" stroke-width="1.2"/><path d="M10 21h4" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/></svg>
+                        <div>
+                            <h5>Industrial Parks</h5>
+                            <p>Multi-tenant, SEZs, shared infrastructure</p>
+                        </div>
+                    </div>
+                    <div class="ind-chip">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="7" y="7" width="3" height="2" stroke="currentColor" stroke-width="0.8"/><rect x="14" y="7" width="3" height="2" stroke="currentColor" stroke-width="0.8"/><rect x="7" y="13" width="3" height="2" stroke="currentColor" stroke-width="0.8"/><rect x="14" y="13" width="3" height="2" stroke="currentColor" stroke-width="0.8"/></svg>
+                        <div>
+                            <h5>Commercial</h5>
+                            <p>Office parks, malls, hospitality</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ SLIDE 7: Impact Numbers ═══════ -->
+        <div class="slide" data-enter="0.73" data-peak="0.80" data-exit="0.88">
+            <div class="slide-inner slide-center">
+                <p class="slide-label">Impact</p>
+                <h2 class="slide-title">The economics are undeniable.</h2>
+                <div class="impact-row">
+                    <div class="impact-block">
+                        <span class="impact-number" data-target="40">0</span><span class="impact-suffix">%</span>
+                        <span class="impact-label">Cost Reduction</span>
+                    </div>
+                    <div class="impact-block">
+                        <span class="impact-number" data-target="1200">0</span><span class="impact-suffix">T</span>
+                        <span class="impact-label">CO₂ Offset / MW / Yr</span>
+                    </div>
+                    <div class="impact-block">
+                        <span class="impact-number" data-target="25">0</span><span class="impact-suffix">Yr</span>
+                        <span class="impact-label">Energy Independence</span>
+                    </div>
+                    <div class="impact-block">
+                        <span class="impact-number" data-target="99.5" data-decimal="1">0</span><span class="impact-suffix">%</span>
+                        <span class="impact-label">System Uptime</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ SLIDE 8: Final CTA ═══════ -->
+        <div class="slide" data-enter="0.86" data-peak="0.93" data-exit="1.0">
+            <div class="slide-inner slide-center">
+                <p class="slide-label">Get Started</p>
+                <h2 class="slide-title slide-title-large">Ready to power your<br>operations with solar?</h2>
+                <p class="slide-body slide-body-center">Book a free site assessment. Our engineering team will evaluate your facility and deliver a custom proposal within 7 business days.</p>
+                <div class="cta-row">
+                    <a href="mailto:projects@solararc.com" class="btn btn-primary btn-lg">Request Site Assessment</a>
+                    <a href="tel:+911234567890" class="btn btn-ghost btn-lg">Call Us</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- BOTTOM PROGRESS BAR -->
+    <div class="progress-track" id="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+    </div>
+
+    <!-- FOOTER (after scroll container) -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <a href="#" class="nav-logo">
+                    <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
+                        <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="1.5"/>
+                        <circle cx="16" cy="16" r="4" fill="currentColor"/>
+                    </svg>
+                    <span>UrbanGrid</span>
+                </a>
+                <p>Intelligent Solar Infrastructure<br>for Commercial & Industrial Scale.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h5>Solutions</h5>
+                    <a href="#">Engineering</a>
+                    <a href="#">Procurement</a>
+                    <a href="#">Construction</a>
+                    <a href="#">O&M</a>
+                </div>
+                <div class="footer-col">
+                    <h5>Company</h5>
+                    <a href="#">Industries</a>
+                    <a href="#">Impact</a>
+                    <a href="#">Process</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <h5>Models</h5>
+                    <a href="#">CAPEX</a>
+                    <a href="#">RESCO / OPEX</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 UrbanGrid Energy. All rights reserved.</p>
+            <div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/917666728884" class="whatsapp-btn" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+        <svg viewBox="0 0 32 32" width="26" height="26" fill="currentColor" aria-hidden="true">
+            <path d="M16 0C7.163 0 0 7.163 0 16c0 2.822.736 5.474 2.027 7.773L0 32l8.456-2.01A15.934 15.934 0 0016 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333a13.28 13.28 0 01-6.778-1.852l-.487-.29-5.018 1.194 1.215-4.889-.32-.506A13.282 13.282 0 012.667 16C2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.18-9.96c-.393-.197-2.327-1.148-2.688-1.28-.362-.131-.625-.197-.888.197-.263.393-1.017 1.28-1.247 1.543-.23.263-.46.295-.853.099-.394-.197-1.662-.613-3.168-1.954-1.17-1.044-1.961-2.333-2.19-2.727-.23-.394-.025-.607.172-.803.178-.176.394-.46.591-.69.197-.23.263-.394.394-.657.131-.263.066-.493-.033-.69-.099-.197-.888-2.14-1.215-2.929-.32-.77-.644-.665-.888-.677-.23-.01-.493-.013-.757-.013s-.69.099-.951.394c-.263.295-1.017 1.017-1.017 2.48 0 1.462 1.083 2.876 1.23 3.073.148.197 2.11 3.22 5.113 4.513.714.308 1.272.492 1.707.63.717.228 1.37.196 1.887.119.575-.086 1.77-.724 2.02-1.424.25-.7.25-1.3.175-1.424-.073-.123-.27-.197-.57-.33z"/>
+        </svg>
+    </a>
+
+    <script>
+/* ═══════════════════════════════════════════════════
+   SOLARARC — Full-Scroll Cinematic Engine
+   Scroll position drives BOTH animation AND content.
+   Every scroll reveals new information.
+   ═══════════════════════════════════════════════════ */
+
+(function () {
+    'use strict';
+
+    // ── CONFIG ──
+    const TOTAL_FRAMES = 192;
+    const FRAME_PATH = 'frames_hq/frame-';
+    const FRAME_EXT = '.jpg';
+
+    // ── STATE ──
+    const images = new Array(TOTAL_FRAMES);
+    let canvas, ctx;
+    let cW, cH; // canvas logical size
+    let lastDrawnIndex = -1;
+    let currentProgress = 0;
+    let rafId = null;
+    let counterAnimated = false;
+    let mouseX = 0, mouseY = 0;
+
+    // ── HELPERS ──
+    function pad(n) {
+        return String(n).padStart(3, '0');
+    }
+
+    function frameSrc(i) {
+        return FRAME_PATH + pad(i + 1) + FRAME_EXT;
+    }
+
+    function clamp(v, lo, hi) {
+        return Math.max(lo, Math.min(hi, v));
+    }
+
+    function easeOutQuart(t) {
+        return 1 - Math.pow(1 - t, 4);
+    }
+
+    // ── CANVAS ──
+    function initCanvas() {
+        canvas = document.getElementById('hero-canvas');
+        ctx = canvas.getContext('2d', { alpha: false, desynchronized: true });
+        sizeCanvas();
+        window.addEventListener('resize', sizeCanvas);
+    }
+
+    function sizeCanvas() {
+        // Use full device pixel ratio for maximum sharpness
+        const dpr = window.devicePixelRatio || 1;
+        cW = window.innerWidth;
+        cH = window.innerHeight;
+        canvas.width = cW * dpr;
+        canvas.height = cH * dpr;
+        canvas.style.width = cW + 'px';
+        canvas.style.height = cH + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        // Force redraw
+        lastDrawnIndex = -1;
+        const idx = Math.round(currentProgress * (TOTAL_FRAMES - 1));
+        if (images[idx]) drawImage(idx);
+    }
+
+    // ── FRAME LOADER ──
+    // Priority: load ALL frames as fast as possible, 6 concurrent
+    function preloadAllFrames() {
+        return new Promise((resolve) => {
+            let loaded = 0;
+            let nextToQueue = 0;
+            const concurrency = 8;
+
+            function loadNext() {
+                if (nextToQueue >= TOTAL_FRAMES) return;
+                const i = nextToQueue++;
+                const img = new Image();
+                img.decoding = 'async';
+                img.onload = function () {
+                    images[i] = img;
+                    loaded++;
+                    // Draw first frame immediately
+                    if (i === 0 && lastDrawnIndex === -1) {
+                        drawImage(0);
+                    }
+                    if (loaded === TOTAL_FRAMES) {
+                        resolve();
+                    } else {
+                        loadNext();
+                    }
+                };
+                img.onerror = function () {
+                    loaded++;
+                    if (loaded === TOTAL_FRAMES) resolve();
+                    else loadNext();
+                };
+                img.src = frameSrc(i);
+            }
+
+            // Kickoff concurrent loaders
+            for (let c = 0; c < concurrency; c++) {
+                loadNext();
+            }
+        });
+    }
+
+    // ── DRAW ──
+    function drawImage(index) {
+        if (index === lastDrawnIndex) return;
+        const img = images[index];
+        if (!img) return;
+
+        // Cover-fit (like CSS object-fit: cover)
+        const iR = img.naturalWidth / img.naturalHeight;
+        const cR = cW / cH;
+        let dw, dh, dx, dy;
+        if (cR > iR) {
+            dw = cW;
+            dh = cW / iR;
+            dx = 0;
+            dy = (cH - dh) / 2;
+        } else {
+            dh = cH;
+            dw = cH * iR;
+            dx = (cW - dw) / 2;
+            dy = 0;
+        }
+
+        ctx.drawImage(img, dx, dy, dw, dh);
+        lastDrawnIndex = index;
+    }
+
+    // ── SCROLL PROGRESS ──
+    function getScrollProgress() {
+        const container = document.getElementById('scroll-container');
+        const rect = container.getBoundingClientRect();
+        const scrollable = container.offsetHeight - window.innerHeight;
+        if (scrollable <= 0) return 0;
+        return clamp(-rect.top / scrollable, 0, 1);
+    }
+
+    // ── SLIDE VISIBILITY ──
+    function updateSlides(progress) {
+        const slides = document.querySelectorAll('.slide');
+        let maxDim = 0;
+        const isLandingPhase = progress < 0.13;
+
+        slides.forEach((slide) => {
+            const enter = parseFloat(slide.dataset.enter);
+            const peak = parseFloat(slide.dataset.peak);
+            const exit = parseFloat(slide.dataset.exit);
+            const isLanding = slide.classList.contains('slide-landing');
+
+            let opacity = 0;
+
+            if (progress >= enter && progress <= exit) {
+                if (progress < peak) {
+                    opacity = clamp((progress - enter) / (peak - enter), 0, 1);
+                } else {
+                    opacity = clamp(1 - (progress - peak) / (exit - peak), 0, 1);
+                }
+            }
+
+            // Landing slide: always starts fully visible
+            if (isLanding && progress <= 0) {
+                opacity = 1;
+            }
+
+            const easedOpacity = opacity > 0 ? easeOutQuart(opacity) : 0;
+
+            if (easedOpacity > 0.01) {
+                slide.style.opacity = easedOpacity;
+                slide.style.visibility = 'visible';
+                slide.style.pointerEvents = easedOpacity > 0.5 ? 'auto' : 'none';
+
+                // Subtle vertical parallax (not on landing slide — that uses mouse parallax)
+                if (!isLanding) {
+                    const translateY = (1 - opacity) * 30;
+                    slide.style.transform = 'translateY(' + (progress < peak ? translateY : -translateY * 0.5) + 'px)';
+                }
+            } else {
+                slide.style.opacity = 0;
+                slide.style.visibility = 'hidden';
+                slide.style.pointerEvents = 'none';
+                if (!isLanding) {
+                    slide.style.transform = 'translateY(40px)';
+                }
+            }
+
+            // Track max dimming — use lighter dim for landing
+            if (!isLanding && easedOpacity > maxDim) maxDim = easedOpacity;
+        });
+
+        // Dim the canvas for readability
+        const dim = document.getElementById('canvas-dim');
+        if (isLandingPhase) {
+            // Light dim on landing for text readability
+            dim.style.background = 'rgba(0, 0, 0, 0.3)';
+        } else {
+            dim.style.background = 'rgba(0, 0, 0, ' + (maxDim * 0.55) + ')';
+        }
+    }
+
+    // ── COUNTER ANIMATION ──
+    function animateCounters() {
+        if (counterAnimated) return;
+        counterAnimated = true;
+
+        document.querySelectorAll('.impact-number[data-target]').forEach((el) => {
+            const target = parseFloat(el.dataset.target);
+            const decimal = parseInt(el.dataset.decimal) || 0;
+            const duration = 2200;
+            const start = performance.now();
+
+            function tick(now) {
+                const t = clamp((now - start) / duration, 0, 1);
+                const eased = easeOutQuart(t);
+                const val = eased * target;
+                el.textContent = decimal > 0 ? val.toFixed(decimal) : Math.round(val);
+                if (t < 1) requestAnimationFrame(tick);
+            }
+
+            requestAnimationFrame(tick);
+        });
+    }
+
+    // ── PROGRESS BAR ──
+    function updateProgressBar(progress) {
+        const fill = document.getElementById('progress-fill');
+        fill.style.width = (progress * 100) + '%';
+    }
+
+    // ── NAV STATE ──
+    function updateNav(progress) {
+        const nav = document.getElementById('main-nav');
+        if (progress > 0.02) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    }
+
+    // ── MAIN RENDER LOOP ──
+    function onFrame() {
+        const progress = getScrollProgress();
+        currentProgress = progress;
+
+        // Map progress to frame index
+        const frameIndex = Math.round(progress * (TOTAL_FRAMES - 1));
+        drawImage(clamp(frameIndex, 0, TOTAL_FRAMES - 1));
+
+        // Update content slides
+        updateSlides(progress);
+
+        // Progress bar
+        updateProgressBar(progress);
+
+        // Nav
+        updateNav(progress);
+
+        // Trigger counter animation when impact slide is visible
+        if (progress >= 0.75 && progress <= 0.88) {
+            animateCounters();
+        }
+
+        rafId = requestAnimationFrame(onFrame);
+    }
+
+    // ── NAV CLICK → SCROLL TO PROGRESS ──
+    function setupNavClicks() {
+        document.querySelectorAll('[data-scroll-to]').forEach((link) => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                // Close mobile nav if open
+                const navLinks = document.getElementById('nav-links');
+                const toggle = document.getElementById('nav-toggle');
+                if (navLinks.classList.contains('open')) {
+                    navLinks.classList.remove('open');
+                    toggle.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+
+                const targetProgress = parseFloat(link.dataset.scrollTo);
+                const container = document.getElementById('scroll-container');
+                const scrollable = container.offsetHeight - window.innerHeight;
+                const targetScroll = targetProgress * scrollable;
+
+                window.scrollTo({
+                    top: targetScroll,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    }
+
+    // ── MOBILE NAV ──
+    function setupMobileNav() {
+        const toggle = document.getElementById('nav-toggle');
+        const links = document.getElementById('nav-links');
+        if (!toggle || !links) return;
+
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('active');
+            links.classList.toggle('open');
+            document.body.style.overflow = links.classList.contains('open') ? 'hidden' : '';
+        });
+    }
+
+    // ── MOUSE PARALLAX ──
+    function setupMouseParallax() {
+        // Touch-primary devices never fire mousemove — skip the forever RAF
+        if (window.matchMedia('(pointer: coarse)').matches) return;
+
+        const parallaxTarget = document.getElementById('landing-parallax');
+        if (!parallaxTarget) return;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth - 0.5) * 2;  // -1 to 1
+            mouseY = (e.clientY / window.innerHeight - 0.5) * 2; // -1 to 1
+        }, { passive: true });
+
+        function updateParallax() {
+            if (currentProgress < 0.13) {
+                const tx = mouseX * -8;
+                const ty = mouseY * -5;
+                parallaxTarget.style.transform = 'translate(' + tx + 'px, ' + ty + 'px)';
+            } else {
+                parallaxTarget.style.transform = 'translate(0, 0)';
+            }
+            requestAnimationFrame(updateParallax);
+        }
+        requestAnimationFrame(updateParallax);
+    }
+
+    // ── INIT ──
+    function init() {
+        initCanvas();
+        preloadAllFrames();
+        setupNavClicks();
+        setupMobileNav();
+        setupMouseParallax();
+
+        // Make landing slide visible immediately
+        const landing = document.getElementById('slide-landing');
+        if (landing) {
+            landing.style.opacity = 1;
+            landing.style.visibility = 'visible';
+            landing.style.pointerEvents = 'auto';
+        }
+
+        // Start render loop
+        rafId = requestAnimationFrame(onFrame);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
+
+    </script>
+</body>
+</html>
