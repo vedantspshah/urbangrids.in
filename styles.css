@@ -739,7 +739,7 @@ body {
     display: block;
     font-size: 0.82rem;
     color: var(--text-muted);
-    padding: 3px 0;
+    padding: 8px 0;
     transition: color 0.3s ease;
     text-decoration: none;
 }
