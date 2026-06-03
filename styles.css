@@ -119,8 +119,8 @@ body {
     background: none;
     border: none;
     cursor: pointer;
-    width: 32px;
-    height: 32px;
+    width: 44px;
+    height: 44px;
     position: relative;
 }
 
@@ -130,15 +130,15 @@ body {
     height: 1.5px;
     background: var(--text);
     position: absolute;
-    left: 5px;
+    left: 11px;
     transition: all 0.3s var(--ease);
 }
 
-.nav-toggle span:first-child { top: 11px; }
-.nav-toggle span:last-child { top: 19px; }
+.nav-toggle span:first-child { top: 17px; }
+.nav-toggle span:last-child { top: 25px; }
 
-.nav-toggle.active span:first-child { top: 15px; transform: rotate(45deg); }
-.nav-toggle.active span:last-child { top: 15px; transform: rotate(-45deg); }
+.nav-toggle.active span:first-child { top: 21px; transform: rotate(45deg); }
+.nav-toggle.active span:last-child { top: 21px; transform: rotate(-45deg); }
 
 /* ─── SCROLL CONTAINER ─── */
 .scroll-container {
@@ -811,7 +811,7 @@ body {
 
     .nav-links.open { display: flex; }
 
-    .nav-link { font-size: 1.15rem; }
+    .nav-link { font-size: 1.15rem; padding: 12px 24px; }
 
     .nav-toggle {
         display: block;
