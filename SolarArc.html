@@ -974,6 +974,61 @@ body {
     line-height: 1.55;
 }
 
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.form-select {
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(245,245,247,0.4)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+}
+
+.file-upload-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    padding: 11px 14px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.file-upload-label:hover {
+    border-color: var(--accent);
+    color: var(--text-dim);
+}
+
+.file-upload-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.form-status {
+    font-size: 0.78rem;
+    text-align: center;
+    margin-top: 8px;
+    min-height: 1.2em;
+    line-height: 1.4;
+}
+
+.form-status-ok  { color: #4ade80; }
+.form-status-err { color: #f87171; }
+
 .form-submit {
     width: 100%;
     background: var(--text);
@@ -992,6 +1047,12 @@ body {
 .form-submit:hover {
     background: var(--accent-warm);
     transform: translateY(-1px);
+}
+
+.form-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
 }
 
 /* ─── WHATSAPP FLOAT BUTTON ─── */
@@ -1193,6 +1254,10 @@ body {
     }
 
     .footer-links {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row {
         grid-template-columns: 1fr;
     }
 
@@ -1582,27 +1647,61 @@ body {
             <h2 class="modal-title" id="modal-heading">Request Site Assessment</h2>
             <p class="modal-sub">Our engineering team will evaluate your facility and deliver a custom solar proposal within 7 business days.</p>
             <form id="assessment-form" novalidate>
-                <div class="form-group">
-                    <label class="form-label" for="f-name">Full Name</label>
-                    <input class="form-input" id="f-name" name="name" type="text" placeholder="Rajesh Kumar" required autocomplete="name">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="f-name">Full Name</label>
+                        <input class="form-input" id="f-name" name="name" type="text" placeholder="Rajesh Kumar" required autocomplete="name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="f-designation">Designation</label>
+                        <input class="form-input" id="f-designation" name="designation" type="text" placeholder="Plant Manager" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-label" for="f-phone">Phone Number</label>
-                    <input class="form-input" id="f-phone" name="phone" type="tel" placeholder="+91 98765 43210" required autocomplete="tel">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="f-phone">Phone Number</label>
+                        <input class="form-input" id="f-phone" name="phone" type="tel" placeholder="+91 98765 43210" required autocomplete="tel">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="f-email">Email ID</label>
+                        <input class="form-input" id="f-email" name="email" type="email" placeholder="rajesh@company.com" required autocomplete="email">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="f-company">Company Name</label>
                     <input class="form-input" id="f-company" name="company" type="text" placeholder="Acme Industries Pvt. Ltd." required autocomplete="organization">
                 </div>
-                <div class="form-group">
-                    <label class="form-label" for="f-location">Facility Location</label>
-                    <input class="form-input" id="f-location" name="location" type="text" placeholder="Pune, Maharashtra" required autocomplete="address-level2">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="f-site">Facility / Site</label>
+                        <input class="form-input" id="f-site" name="site" type="text" placeholder="Pune, Maharashtra" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="f-industry">Industry</label>
+                        <select class="form-input form-select" id="f-industry" name="industry" required>
+                            <option value="" disabled selected>Select industry</option>
+                            <option value="Manufacturing">Manufacturing</option>
+                            <option value="Warehouses">Warehouses</option>
+                            <option value="Industrial Parks">Industrial Parks</option>
+                            <option value="Commercial">Commercial</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="f-query">Query Details <span class="optional">(optional)</span></label>
-                    <textarea class="form-textarea" id="f-query" name="query" placeholder="Rooftop capacity, sanctioned load, current electricity bill, or any specific requirements…"></textarea>
+                    <label class="form-label" for="f-interest">Interest / Requirements <span class="optional">(optional)</span></label>
+                    <textarea class="form-textarea" id="f-interest" name="interest" placeholder="Rooftop capacity, sanctioned load, preferred model (CAPEX / RESCO), or any specific requirements…"></textarea>
                 </div>
-                <button class="form-submit" type="submit">Send Assessment Request</button>
+                <div class="form-group">
+                    <label class="form-label" for="f-bill">Electricity Bill <span class="optional">(optional — helps us size the system)</span></label>
+                    <label class="file-upload-label" id="f-bill-label" for="f-bill">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                        <span id="f-bill-text">Upload bill image or PDF</span>
+                    </label>
+                    <input class="file-upload-input" id="f-bill" name="bill" type="file" accept="image/*,.pdf" aria-label="Upload electricity bill">
+                </div>
+                <button class="form-submit" type="submit" id="form-submit-btn">Send Assessment Request</button>
+                <p class="form-status" id="form-status"></p>
             </form>
         </div>
     </div>
@@ -1945,15 +2044,32 @@ body {
     }
 
     // ── ASSESSMENT MODAL ──
+    // Replace APPS_SCRIPT_URL below with your deployed Google Apps Script web app URL
+    var APPS_SCRIPT_URL = 'APPS_SCRIPT_URL_HERE';
+
     function setupAssessmentModal() {
-        const overlay = document.getElementById('assessment-modal');
+        var overlay = document.getElementById('assessment-modal');
         if (!overlay) return;
-        const form = document.getElementById('assessment-form');
-        const closeBtn = document.getElementById('modal-close');
+        var form = document.getElementById('assessment-form');
+        var closeBtn = document.getElementById('modal-close');
+        var submitBtn = document.getElementById('form-submit-btn');
+        var statusEl = document.getElementById('form-status');
+        var billInput = document.getElementById('f-bill');
+        var billText = document.getElementById('f-bill-text');
+
+        // Show filename when bill is selected
+        if (billInput) {
+            billInput.addEventListener('change', function () {
+                billText.textContent = billInput.files.length
+                    ? billInput.files[0].name
+                    : 'Upload bill image or PDF';
+            });
+        }
 
         function openModal() {
             overlay.classList.add('open');
             document.body.style.overflow = 'hidden';
+            if (statusEl) { statusEl.textContent = ''; statusEl.className = 'form-status'; }
         }
 
         function closeModal() {
@@ -1971,22 +2087,82 @@ body {
 
         form.addEventListener('submit', function (e) {
             e.preventDefault();
-            var name = form.querySelector('[name=name]').value.trim();
-            var phone = form.querySelector('[name=phone]').value.trim();
-            var company = form.querySelector('[name=company]').value.trim();
-            var location = form.querySelector('[name=location]').value.trim();
-            var query = form.querySelector('[name=query]').value.trim();
-            var subject = encodeURIComponent('Site Assessment Request — ' + (company || name));
-            var body = encodeURIComponent(
-                'Name: ' + name +
-                '\nPhone: ' + phone +
-                '\nCompany: ' + company +
-                '\nLocation: ' + location +
-                (query ? '\n\nQuery:\n' + query : '')
-            );
-            window.open('mailto:sales@urbangrids.in?subject=' + subject + '&body=' + body);
-            closeModal();
-            form.reset();
+
+            var payload = {
+                name:        form.querySelector('[name=name]').value.trim(),
+                designation: form.querySelector('[name=designation]').value.trim(),
+                phone:       form.querySelector('[name=phone]').value.trim(),
+                email:       form.querySelector('[name=email]').value.trim(),
+                company:     form.querySelector('[name=company]').value.trim(),
+                site:        form.querySelector('[name=site]').value.trim(),
+                industry:    form.querySelector('[name=industry]').value,
+                interest:    form.querySelector('[name=interest]').value.trim()
+            };
+
+            var file = billInput && billInput.files[0];
+
+            function sendPayload(billData) {
+                if (billData) payload.bill = billData;
+
+                // If Apps Script not yet configured fall back to mailto
+                if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'APPS_SCRIPT_URL_HERE') {
+                    var subject = encodeURIComponent('Site Assessment Request — ' + (payload.company || payload.name));
+                    var body = encodeURIComponent(
+                        'Name: ' + payload.name + '\nDesignation: ' + payload.designation +
+                        '\nPhone: ' + payload.phone + '\nEmail: ' + payload.email +
+                        '\nCompany: ' + payload.company + '\nSite: ' + payload.site +
+                        '\nIndustry: ' + payload.industry +
+                        (payload.interest ? '\n\nInterest:\n' + payload.interest : '')
+                    );
+                    window.open('mailto:sales@urbangrids.in?subject=' + subject + '&body=' + body);
+                    closeModal();
+                    form.reset();
+                    if (billText) billText.textContent = 'Upload bill image or PDF';
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending…';
+                statusEl.textContent = '';
+
+                fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                })
+                .then(function (res) { return res.json(); })
+                .then(function (data) {
+                    if (data.status === 'success') {
+                        statusEl.textContent = 'Request sent! We\'ll be in touch within 2 business days.';
+                        statusEl.className = 'form-status form-status-ok';
+                        form.reset();
+                        if (billText) billText.textContent = 'Upload bill image or PDF';
+                        setTimeout(closeModal, 2800);
+                    } else {
+                        throw new Error(data.error || 'Unknown error');
+                    }
+                })
+                .catch(function () {
+                    statusEl.textContent = 'Something went wrong. Please WhatsApp us or email sales@urbangrids.in.';
+                    statusEl.className = 'form-status form-status-err';
+                })
+                .finally(function () {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Send Assessment Request';
+                });
+            }
+
+            // Read bill file as base64 if provided
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function (ev) {
+                    var base64 = ev.target.result.split(',')[1];
+                    sendPayload({ name: file.name, mimeType: file.type, data: base64 });
+                };
+                reader.readAsDataURL(file);
+            } else {
+                sendPayload(null);
+            }
         });
     }
 
