@@ -525,7 +525,9 @@ body {
     font-size: 0.75rem;
     font-weight: 600;
     color: var(--text-dim);
-    white-space: nowrap;
+    white-space: normal;
+    text-align: center;
+    max-width: 64px;
 }
 
 .lc-divider {
@@ -850,6 +852,8 @@ body {
         height: 28px;
     }
 
+    .stat-v-label { white-space: normal; }
+
     .landing-cta-row {
         flex-direction: column;
         align-items: flex-start;
@@ -887,6 +891,11 @@ body {
 }
 
 @media (max-width: 480px) {
+    .slide-inner {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
     .slide-grid-services {
         grid-template-columns: 1fr;
     }
