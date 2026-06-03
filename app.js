@@ -259,8 +259,8 @@
         // Nav
         updateNav(progress);
 
-        // Trigger counter animation when impact slide is visible
-        if (progress >= 0.75 && progress <= 0.88) {
+        // Trigger counter animation when impact slide is visible (slot 8: 0.76–0.90)
+        if (progress >= 0.77 && progress <= 0.90) {
             animateCounters();
         }
 

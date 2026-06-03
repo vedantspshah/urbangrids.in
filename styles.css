@@ -796,30 +796,41 @@ body {
 .partner-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 10px 16px;
     margin-top: 28px;
-    max-width: 680px;
+    max-width: 720px;
     width: 100%;
 }
 
+.partner-col-header {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent-warm);
+    text-align: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(232, 169, 16, 0.22);
+}
+
 .partner-chip {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
-    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 12px;
+    padding: 18px 14px;
     text-align: center;
     font-family: var(--font-display);
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: var(--text-dim);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
     letter-spacing: 0.01em;
-    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+    transition: border-color 0.3s ease, background 0.3s ease, transform 0.2s ease;
 }
 
 .partner-chip:hover {
-    border-color: rgba(232, 169, 16, 0.25);
-    color: var(--text);
-    background: rgba(232, 169, 16, 0.04);
+    border-color: rgba(232, 169, 16, 0.4);
+    background: rgba(232, 169, 16, 0.06);
+    transform: translateY(-2px);
 }
 
 /* ─── ASSESSMENT MODAL ─── */
@@ -1154,7 +1165,17 @@ body {
     }
 
     .partner-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px 8px;
+    }
+
+    .partner-chip {
+        padding: 12px 8px;
+        font-size: 0.8rem;
+    }
+
+    .partner-col-header {
+        font-size: 0.55rem;
     }
 
     .footer-links {
