@@ -189,6 +189,7 @@ body {
     pointer-events: none;
     opacity: 0;
     visibility: hidden;
+    overflow: hidden;
     transition: none; /* JS controls opacity directly for smoothness */
 }
 
@@ -794,6 +795,7 @@ body {
 }
 
 @media (max-width: 768px) {
+    /* ── NAV ── */
     .nav-links {
         display: none;
         position: fixed;
@@ -810,20 +812,26 @@ body {
         gap: 24px;
         z-index: 999;
     }
-
     .nav-links.open { display: flex; }
-
     .nav-link { font-size: 1.15rem; padding: 12px 24px; }
+    .nav-toggle { display: block; z-index: 1001; }
 
-    .nav-toggle {
-        display: block;
-        z-index: 1001;
-    }
+    /* ── TYPOGRAPHY SCALE-DOWN ── */
+    .slide-headline { font-size: clamp(1.8rem, 7.5vw, 2.8rem); }
+    .slide-title { font-size: clamp(1.45rem, 5.5vw, 2rem); margin-bottom: 12px; }
+    .slide-title-large { font-size: clamp(1.8rem, 6.5vw, 2.4rem); }
+    .slide-label { margin-bottom: 10px; }
+    .slide-body { margin-bottom: 16px; }
 
+    /* ── SLIDE ALIGNMENT — block layout on mobile, not flex-end ── */
     .slide-right {
+        display: block;
         justify-content: flex-start;
+        margin-left: 0;
     }
+    .slide-right > * { max-width: 100%; }
 
+    /* ── LANDING HERO ── */
     .slide-landing-layout {
         grid-template-columns: 1fr;
         padding-top: 80px;
@@ -831,59 +839,64 @@ body {
         gap: 20px;
         overflow: hidden;
     }
-
-    .landing-right {
-        justify-self: flex-start;
-    }
-
+    .landing-right { justify-self: flex-start; }
     .stats-vertical {
         flex-direction: row;
         align-items: center;
         min-width: auto;
     }
-
-    .stat-v {
-        align-items: center;
-        padding: 8px 12px;
-    }
-
-    .stat-v-divider {
-        width: 1px;
-        height: 28px;
-    }
-
+    .stat-v { align-items: center; padding: 8px 12px; }
+    .stat-v-divider { width: 1px; height: 28px; }
     .stat-v-label { white-space: normal; }
+    .landing-cta-row { flex-direction: column; align-items: stretch; }
 
-    .landing-cta-row {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
+    /* ── SERVICES GRID ── */
     .slide-grid-services {
         grid-template-columns: 1fr 1fr;
         max-width: 100%;
+        margin-top: 16px;
+        gap: 8px;
     }
 
+    /* ── FEATURE LIST ── */
+    .feature-list { gap: 8px; }
+    .feature-list li { font-size: 0.85rem; }
+
+    /* ── LIFECYCLE — 3-column grid instead of flex row ── */
+    .lifecycle-strip {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 20px;
+        flex-wrap: unset;
+        justify-content: unset;
+    }
+    .lc-step { padding: 8px 0; }
+    .lc-divider { display: none; }
+
+    /* ── INDUSTRIES ── */
     .industry-chips {
         grid-template-columns: 1fr;
         max-width: 100%;
+        margin-top: 16px;
     }
 
+    /* ── IMPACT ── */
     .impact-row {
         grid-template-columns: 1fr 1fr;
         max-width: 100%;
-    }
-
-    .footer-inner {
-        grid-template-columns: 1fr;
-        gap: 36px;
-    }
-
-    .footer-bottom {
-        flex-direction: column;
+        margin-top: 20px;
         gap: 12px;
-        text-align: center;
     }
+    .impact-block { padding: 20px 12px; }
+
+    /* ── CTA BUTTONS ── */
+    .cta-row { flex-direction: column; align-items: stretch; gap: 12px; }
+    .cta-row .btn { width: 100%; }
+
+    /* ── FOOTER ── */
+    .footer-inner { grid-template-columns: 1fr; gap: 36px; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
 }
 
 @media (max-width: 768px) and (max-height: 600px) {
@@ -902,15 +915,15 @@ body {
 
     .impact-row {
         grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .impact-block {
+        padding: 16px 12px;
     }
 
     .lifecycle-strip {
-        justify-content: flex-start;
-    }
-
-    .cta-row {
-        flex-direction: column;
-        align-items: stretch;
+        grid-template-columns: repeat(3, 1fr);
     }
 
     .footer-links {
