@@ -335,15 +335,32 @@
     }
 
     // ── ASSESSMENT MODAL ──
+    // Replace APPS_SCRIPT_URL below with your deployed Google Apps Script web app URL
+    var APPS_SCRIPT_URL = 'APPS_SCRIPT_URL_HERE';
+
     function setupAssessmentModal() {
-        const overlay = document.getElementById('assessment-modal');
+        var overlay = document.getElementById('assessment-modal');
         if (!overlay) return;
-        const form = document.getElementById('assessment-form');
-        const closeBtn = document.getElementById('modal-close');
+        var form = document.getElementById('assessment-form');
+        var closeBtn = document.getElementById('modal-close');
+        var submitBtn = document.getElementById('form-submit-btn');
+        var statusEl = document.getElementById('form-status');
+        var billInput = document.getElementById('f-bill');
+        var billText = document.getElementById('f-bill-text');
+
+        // Show filename when bill is selected
+        if (billInput) {
+            billInput.addEventListener('change', function () {
+                billText.textContent = billInput.files.length
+                    ? billInput.files[0].name
+                    : 'Upload bill image or PDF';
+            });
+        }
 
         function openModal() {
             overlay.classList.add('open');
             document.body.style.overflow = 'hidden';
+            if (statusEl) { statusEl.textContent = ''; statusEl.className = 'form-status'; }
         }
 
         function closeModal() {
@@ -361,22 +378,82 @@
 
         form.addEventListener('submit', function (e) {
             e.preventDefault();
-            var name = form.querySelector('[name=name]').value.trim();
-            var phone = form.querySelector('[name=phone]').value.trim();
-            var company = form.querySelector('[name=company]').value.trim();
-            var location = form.querySelector('[name=location]').value.trim();
-            var query = form.querySelector('[name=query]').value.trim();
-            var subject = encodeURIComponent('Site Assessment Request — ' + (company || name));
-            var body = encodeURIComponent(
-                'Name: ' + name +
-                '\nPhone: ' + phone +
-                '\nCompany: ' + company +
-                '\nLocation: ' + location +
-                (query ? '\n\nQuery:\n' + query : '')
-            );
-            window.open('mailto:sales@urbangrids.in?subject=' + subject + '&body=' + body);
-            closeModal();
-            form.reset();
+
+            var payload = {
+                name:        form.querySelector('[name=name]').value.trim(),
+                designation: form.querySelector('[name=designation]').value.trim(),
+                phone:       form.querySelector('[name=phone]').value.trim(),
+                email:       form.querySelector('[name=email]').value.trim(),
+                company:     form.querySelector('[name=company]').value.trim(),
+                site:        form.querySelector('[name=site]').value.trim(),
+                industry:    form.querySelector('[name=industry]').value,
+                interest:    form.querySelector('[name=interest]').value.trim()
+            };
+
+            var file = billInput && billInput.files[0];
+
+            function sendPayload(billData) {
+                if (billData) payload.bill = billData;
+
+                // If Apps Script not yet configured fall back to mailto
+                if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'APPS_SCRIPT_URL_HERE') {
+                    var subject = encodeURIComponent('Site Assessment Request — ' + (payload.company || payload.name));
+                    var body = encodeURIComponent(
+                        'Name: ' + payload.name + '\nDesignation: ' + payload.designation +
+                        '\nPhone: ' + payload.phone + '\nEmail: ' + payload.email +
+                        '\nCompany: ' + payload.company + '\nSite: ' + payload.site +
+                        '\nIndustry: ' + payload.industry +
+                        (payload.interest ? '\n\nInterest:\n' + payload.interest : '')
+                    );
+                    window.open('mailto:sales@urbangrids.in?subject=' + subject + '&body=' + body);
+                    closeModal();
+                    form.reset();
+                    if (billText) billText.textContent = 'Upload bill image or PDF';
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending…';
+                statusEl.textContent = '';
+
+                fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                })
+                .then(function (res) { return res.json(); })
+                .then(function (data) {
+                    if (data.status === 'success') {
+                        statusEl.textContent = 'Request sent! We\'ll be in touch within 2 business days.';
+                        statusEl.className = 'form-status form-status-ok';
+                        form.reset();
+                        if (billText) billText.textContent = 'Upload bill image or PDF';
+                        setTimeout(closeModal, 2800);
+                    } else {
+                        throw new Error(data.error || 'Unknown error');
+                    }
+                })
+                .catch(function () {
+                    statusEl.textContent = 'Something went wrong. Please WhatsApp us or email sales@urbangrids.in.';
+                    statusEl.className = 'form-status form-status-err';
+                })
+                .finally(function () {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Send Assessment Request';
+                });
+            }
+
+            // Read bill file as base64 if provided
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function (ev) {
+                    var base64 = ev.target.result.split(',')[1];
+                    sendPayload({ name: file.name, mimeType: file.type, data: base64 });
+                };
+                reader.readAsDataURL(file);
+            } else {
+                sendPayload(null);
+            }
         });
     }
 
