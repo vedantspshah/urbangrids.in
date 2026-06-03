@@ -1187,6 +1187,33 @@ body {
     }
 
     .modal-box {
-        padding: 28px 20px 24px;
+        padding: 20px 16px 16px;
+    }
+
+    .modal-title {
+        font-size: 1.15rem;
+        margin-bottom: 4px;
+    }
+
+    .modal-sub {
+        font-size: 0.76rem;
+        margin-bottom: 14px;
+    }
+
+    .form-group {
+        margin-bottom: 9px;
+    }
+
+    .form-label {
+        margin-bottom: 5px;
+    }
+
+    .form-input,
+    .form-textarea {
+        padding: 9px 12px;
+    }
+
+    .form-textarea {
+        min-height: 68px;
     }
 }
