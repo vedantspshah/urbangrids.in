@@ -310,6 +310,9 @@
 
     // ── MOUSE PARALLAX ──
     function setupMouseParallax() {
+        // Touch-primary devices never fire mousemove — skip the forever RAF
+        if (window.matchMedia('(pointer: coarse)').matches) return;
+
         const parallaxTarget = document.getElementById('landing-parallax');
         if (!parallaxTarget) return;
 
