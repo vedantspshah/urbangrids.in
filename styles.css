@@ -776,6 +776,35 @@ body {
 
 .footer-legal a:hover { color: var(--text); }
 
+/* ─── WHATSAPP FLOAT BUTTON ─── */
+.whatsapp-btn {
+    position: fixed;
+    bottom: 28px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-decoration: none;
+    z-index: 500;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+    transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+.whatsapp-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 28px rgba(37, 211, 102, 0.6);
+}
+
+.whatsapp-btn svg {
+    display: block;
+    flex-shrink: 0;
+}
+
 /* ═══════════════════════════════════════════════════
    RESPONSIVE
    ═══════════════════════════════════════════════════ */
@@ -897,6 +926,9 @@ body {
     /* ── FOOTER ── */
     .footer-inner { grid-template-columns: 1fr; gap: 36px; }
     .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+
+    /* ── WHATSAPP BUTTON ── */
+    .whatsapp-btn { bottom: 20px; right: 16px; width: 52px; height: 52px; }
 }
 
 @media (max-width: 768px) and (max-height: 600px) {
