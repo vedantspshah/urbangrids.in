@@ -51,7 +51,7 @@ body {
     left: 0;
     width: 100%;
     z-index: 1000;
-    padding: 0 clamp(20px, 4vw, 60px);
+    padding: env(safe-area-inset-top, 0px) clamp(20px, 4vw, 60px) 0;
     transition: background 0.5s ease, backdrop-filter 0.5s ease;
 }
 
@@ -684,6 +684,7 @@ body {
     height: 2px;
     background: rgba(255,255,255,0.04);
     z-index: 100;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 .progress-fill {
