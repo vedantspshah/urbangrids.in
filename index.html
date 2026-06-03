@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanGrid — Commercial & Industrial Solar EPC</title>
+    <meta name="description" content="Turnkey Commercial & Industrial Solar EPC Solutions. Engineering, Procurement, Construction — from 30kW to Multi-Megawatt deployments.">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav id="main-nav" class="nav">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo" id="nav-logo">
+                <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M16 4L16 28M4 16L28 16M7.5 7.5L24.5 24.5M24.5 7.5L7.5 24.5" stroke="currentColor" stroke-width="0.7" opacity="0.4"/>
+                    <circle cx="16" cy="16" r="4" fill="currentColor"/>
+                </svg>
+                <span>UrbanGrid</span>
+            </a>
+            <div class="nav-links" id="nav-links">
+                <a href="#" class="nav-link" data-scroll-to="0">Home</a>
+                <a href="#" class="nav-link" data-scroll-to="0.12">Solutions</a>
+                <a href="#" class="nav-link" data-scroll-to="0.30">Models</a>
+                <a href="#" class="nav-link" data-scroll-to="0.50">Process</a>
+                <a href="#" class="nav-link" data-scroll-to="0.65">Industries</a>
+                <a href="#" class="nav-link" data-scroll-to="0.78">Impact</a>
+                <a href="#" class="nav-link nav-link-cta" data-scroll-to="0.92">Get Assessment</a>
+            </div>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+                <span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- FULL-PAGE SCROLL CONTAINER -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div id="scroll-container" class="scroll-container">
+
+        <!-- Sticky canvas background -->
+        <div class="canvas-wrap">
+            <canvas id="hero-canvas"></canvas>
+            <!-- Dimming overlay — increases as text appears -->
+            <div class="canvas-dim" id="canvas-dim"></div>
+        </div>
+
+        <!-- ═══════ SLIDE 0: Landing Hero (visible on load) ═══════ -->
+        <div class="slide slide-landing" id="slide-landing" data-enter="-0.01" data-peak="0.02" data-exit="0.13">
+            <div class="slide-inner slide-landing-layout" id="landing-parallax">
+                <!-- LEFT: Main hero content -->
+                <div class="landing-left">
+                    <p class="slide-label landing-label">Commercial & Industrial Solar EPC</p>
+                    <h1 class="slide-headline landing-headline" id="hero-headline">
+                        Powering Industry with<br>
+                        <span class="text-accent">Intelligent Solar<br>Infrastructure.</span>
+                    </h1>
+                    <p class="slide-sub landing-sub">Turnkey EPC Solutions · 30kW to Multi-Megawatt Deployments</p>
+                    <div class="landing-cta-row">
+                        <a href="#" class="btn btn-primary" data-scroll-to="0.12">Explore Solutions</a>
+                        <a href="#" class="btn btn-ghost" data-scroll-to="0.92">Request Assessment</a>
+                    </div>
+                </div>
+
+                <!-- RIGHT: Vertical stats column -->
+                <div class="landing-right" id="landing-stats">
+                    <div class="stats-vertical">
+                        <div class="stat-v">
+                            <span class="stat-v-num">60</span>
+                            <span class="stat-v-label">MW Deployed</span>
+                        </div>
+                        <div class="stat-v-divider"></div>
+                        <div class="stat-v">
+                            <span class="stat-v-num">40%</span>
+                            <span class="stat-v-label">Avg Cost Savings</span>
+                        </div>
+                        <div class="stat-v-divider"></div>
+                        <div class="stat-v">
+                            <span class="stat-v-num">99.5%</span>
+                            <span class="stat-v-label">Uptime SLA</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scroll hint -->
+                <div class="hero-scroll-hint" id="scroll-hint">
+                    <div class="scroll-line-anim"></div>
+                    <span>Scroll to explore</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ SLIDE 2: What We Do ═══════ -->
+        <div class="slide" data-enter="0.14" data-peak="0.19" data-exit="0.27">
+            <div class="slide-inner slide-right">
+                <p class="slide-label">What We Do</p>
+                <h2 class="slide-title">End-to-end solar EPC.<br>Zero compromise.</h2>
+                <div class="slide-grid-services">
+                    <div class="mini-card">
+                        <h4>Engineering</h4>
+                        <p>Precision system design, shadow mapping, yield simulation.</p>
+                    </div>
+                    <div class="mini-card">
+                        <h4>Procurement</h4>
+                        <p>Tier-1 modules, certified inverters, direct OEM partnerships.</p>
+                    </div>
+                    <div class="mini-card">
+                        <h4>Construction</h4>
+                        <p>Safety-compliant, modular installation. On-time, every time.</p>
+                    </div>
+                    <div class="mini-card">
+                        <h4>Grid Integration</h4>
+                        <p>Net-metering, interconnection, regulatory compliance.</p>
+                    </div>
+                    <div class="mini-card">
+                        <h4>O&M</h4>
+                        <p>24/7 monitoring, preventive maintenance, guaranteed output.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ SLIDE 3: CAPEX Model ═══════ -->
+        <div class="slide" data-enter="0.25" data-peak="0.32" data-exit="0.40">
+            <div class="slide-inner slide-left">
+                <p class="slide-label">Business Model</p>
+                <div class="model-badge-inline">CAPEX</div>
+                <h2 class="slide-title">Own Your Power.</h2>
+                <p class="slide-body">Full asset ownership with accelerated depreciation benefits and maximum long-term returns.</p>
+                <ul class="feature-list">
+                    <li><span class="feat-arrow">→</span> Upfront investment, complete ownership</li>
+                    <li><span class="feat-arrow">→</span> Accelerated depreciation (40% Year 1)</li>
+                    <li><span class="feat-arrow">→</span> 3–5 year payback period</li>
+                    <li><span class="feat-arrow">→</span> 25+ years of free energy</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════ SLIDE 4: RESCO Model ═══════ -->
+        <div class="slide" data-enter="0.37" data-peak="0.43" data-exit="0.50">
+            <div class="slide-inner slide-right">
+                <p class="slide-label">Business Model</p>
+                <div class="model-badge-inline model-badge-accent">RESCO / OPEX</div>
+                <h2 class="slide-title">Zero Capex Solar.</h2>
+                <p class="slide-body">No upfront investment. Fixed energy tariff. We build, own, and operate — you simply consume clean energy.</p>
+                <ul class="feature-list">
+                    <li><span class="feat-arrow">→</span> Zero upfront cost</li>
+                    <li><span class="feat-arrow">→</span> Fixed tariff via long-term PPA</li>
+                    <li><span class="feat-arrow">→</span> Fully managed system</li>
+                    <li><span class="feat-arrow">→</span> Immediate Day-1 savings</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════ SLIDE 5: Project Lifecycle ═══════ -->
+        <div class="slide" data-enter="0.47" data-peak="0.54" data-exit="0.63">
+            <div class="slide-inner slide-center">
+                <p class="slide-label">Process</p>
+                <h2 class="slide-title">From assessment to generation.<br>Seamlessly.</h2>
+                <div class="lifecycle-strip">
+                    <div class="lc-step">
+                        <span class="lc-num">01</span>
+                        <span class="lc-name">Site Assessment</span>
+                    </div>
+                    <div class="lc-divider"></div>
+                    <div class="lc-step">
+                        <span class="lc-num">02</span>
+                        <span class="lc-name">Design</span>
+                    </div>
+                    <div class="lc-divider"></div>
+                    <div class="lc-step">
+                        <span class="lc-num">03</span>
+                        <span class="lc-name">Procurement</span>
+                    </div>
+                    <div class="lc-divider"></div>
+                    <div class="lc-step">
+                        <span class="lc-num">04</span>
+                        <span class="lc-name">Construction</span>
+                    </div>
+                    <div class="lc-divider"></div>
+                    <div class="lc-step">
+                        <span class="lc-num">05</span>
+                        <span class="lc-name">Commissioning</span>
+                    </div>
+                    <div class="lc-divider"></div>
+                    <div class="lc-step">
+                        <span class="lc-num">06</span>
+                        <span class="lc-name">O&M</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ SLIDE 6: Industries ═══════ -->
+        <div class="slide" data-enter="0.60" data-peak="0.67" data-exit="0.76">
+            <div class="slide-inner slide-left">
+                <p class="slide-label">Industries</p>
+                <h2 class="slide-title">Built for the spaces that<br>power economies.</h2>
+                <div class="industry-chips">
+                    <div class="ind-chip">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M2 21V9l5-4v6l5-4v6l5-4v8" stroke="currentColor" stroke-width="1.2"/><path d="M2 21h20M22 21V5H17" stroke="currentColor" stroke-width="1.2"/></svg>
+                        <div>
+                            <h5>Manufacturing</h5>
+                            <p>High-load factories, rooftop & ground-mount</p>
+                        </div>
+                    </div>
+                    <div class="ind-chip">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M2 21V10L12 4l10 6v11" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="15" width="6" height="6" stroke="currentColor" stroke-width="1"/></svg>
+                        <div>
+                            <h5>Warehouses</h5>
+                            <p>Large roofs, cold storage & distribution</p>
+                        </div>
+                    </div>
+                    <div class="ind-chip">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="8" height="14" stroke="currentColor" stroke-width="1.2"/><rect x="14" y="4" width="8" height="17" stroke="currentColor" stroke-width="1.2"/><path d="M10 21h4" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/></svg>
+                        <div>
+                            <h5>Industrial Parks</h5>
+                            <p>Multi-tenant, SEZs, shared infrastructure</p>
+                        </div>
+                    </div>
+                    <div class="ind-chip">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="7" y="7" width="3" height="2" stroke="currentColor" stroke-width="0.8"/><rect x="14" y="7" width="3" height="2" stroke="currentColor" stroke-width="0.8"/><rect x="7" y="13" width="3" height="2" stroke="currentColor" stroke-width="0.8"/><rect x="14" y="13" width="3" height="2" stroke="currentColor" stroke-width="0.8"/></svg>
+                        <div>
+                            <h5>Commercial</h5>
+                            <p>Office parks, malls, hospitality</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ SLIDE 7: Impact Numbers ═══════ -->
+        <div class="slide" data-enter="0.73" data-peak="0.80" data-exit="0.88">
+            <div class="slide-inner slide-center">
+                <p class="slide-label">Impact</p>
+                <h2 class="slide-title">The economics are undeniable.</h2>
+                <div class="impact-row">
+                    <div class="impact-block">
+                        <span class="impact-number" data-target="40">0</span><span class="impact-suffix">%</span>
+                        <span class="impact-label">Cost Reduction</span>
+                    </div>
+                    <div class="impact-block">
+                        <span class="impact-number" data-target="1200">0</span><span class="impact-suffix">T</span>
+                        <span class="impact-label">CO₂ Offset / MW / Yr</span>
+                    </div>
+                    <div class="impact-block">
+                        <span class="impact-number" data-target="25">0</span><span class="impact-suffix">Yr</span>
+                        <span class="impact-label">Energy Independence</span>
+                    </div>
+                    <div class="impact-block">
+                        <span class="impact-number" data-target="99.5" data-decimal="1">0</span><span class="impact-suffix">%</span>
+                        <span class="impact-label">System Uptime</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ SLIDE 8: Final CTA ═══════ -->
+        <div class="slide" data-enter="0.86" data-peak="0.93" data-exit="1.0">
+            <div class="slide-inner slide-center">
+                <p class="slide-label">Get Started</p>
+                <h2 class="slide-title slide-title-large">Ready to power your<br>operations with solar?</h2>
+                <p class="slide-body slide-body-center">Book a free site assessment. Our engineering team will evaluate your facility and deliver a custom proposal within 7 business days.</p>
+                <div class="cta-row">
+                    <a href="mailto:projects@solararc.com" class="btn btn-primary btn-lg">Request Site Assessment</a>
+                    <a href="tel:+911234567890" class="btn btn-ghost btn-lg">Call Us</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- BOTTOM PROGRESS BAR -->
+    <div class="progress-track" id="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+    </div>
+
+    <!-- FOOTER (after scroll container) -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <a href="#" class="nav-logo">
+                    <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
+                        <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="1.5"/>
+                        <circle cx="16" cy="16" r="4" fill="currentColor"/>
+                    </svg>
+                    <span>UrbanGrid</span>
+                </a>
+                <p>Intelligent Solar Infrastructure<br>for Commercial & Industrial Scale.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h5>Solutions</h5>
+                    <a href="#">Engineering</a>
+                    <a href="#">Procurement</a>
+                    <a href="#">Construction</a>
+                    <a href="#">O&M</a>
+                </div>
+                <div class="footer-col">
+                    <h5>Company</h5>
+                    <a href="#">Industries</a>
+                    <a href="#">Impact</a>
+                    <a href="#">Process</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <h5>Models</h5>
+                    <a href="#">CAPEX</a>
+                    <a href="#">RESCO / OPEX</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 UrbanGrid Energy. All rights reserved.</p>
+            <div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
