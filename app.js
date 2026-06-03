@@ -334,6 +334,52 @@
         requestAnimationFrame(updateParallax);
     }
 
+    // ── ASSESSMENT MODAL ──
+    function setupAssessmentModal() {
+        const overlay = document.getElementById('assessment-modal');
+        if (!overlay) return;
+        const form = document.getElementById('assessment-form');
+        const closeBtn = document.getElementById('modal-close');
+
+        function openModal() {
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            overlay.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        document.querySelectorAll('[data-open-modal="assessment"]').forEach(function (el) {
+            el.addEventListener('click', function (e) { e.preventDefault(); openModal(); });
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+        overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var name = form.querySelector('[name=name]').value.trim();
+            var phone = form.querySelector('[name=phone]').value.trim();
+            var company = form.querySelector('[name=company]').value.trim();
+            var location = form.querySelector('[name=location]').value.trim();
+            var query = form.querySelector('[name=query]').value.trim();
+            var subject = encodeURIComponent('Site Assessment Request — ' + (company || name));
+            var body = encodeURIComponent(
+                'Name: ' + name +
+                '\nPhone: ' + phone +
+                '\nCompany: ' + company +
+                '\nLocation: ' + location +
+                (query ? '\n\nQuery:\n' + query : '')
+            );
+            window.open('mailto:sales@urbangrids.in?subject=' + subject + '&body=' + body);
+            closeModal();
+            form.reset();
+        });
+    }
+
     // ── INIT ──
     function init() {
         initCanvas();
@@ -341,6 +387,7 @@
         setupNavClicks();
         setupMobileNav();
         setupMouseParallax();
+        setupAssessmentModal();
 
         // Make landing slide visible immediately
         const landing = document.getElementById('slide-landing');
