@@ -1079,6 +1079,8 @@ body {
         flex-direction: row;
         align-items: center;
         min-width: auto;
+        width: fit-content;
+        align-self: flex-start;
     }
     .stat-v { align-items: center; padding: 8px 12px; }
     .stat-v-divider { width: 1px; height: 28px; }
