@@ -1103,10 +1103,12 @@ body {
         grid-template-columns: repeat(3, 1fr);
         gap: 12px;
         margin-top: 20px;
+        width: 100%;       /* must fill flex parent so 1fr distributes real space */
         flex-wrap: unset;
         justify-content: unset;
     }
     .lc-step { padding: 8px 0; }
+    .lc-name { max-width: 100%; }   /* unlock from 64px — column width now controls sizing */
     .lc-divider { display: none; }
 
     /* ── INDUSTRIES ── */
