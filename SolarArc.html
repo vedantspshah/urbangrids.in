@@ -157,7 +157,7 @@ body {
     position: relative;
     /* Height = enough scroll distance for all slides */
     /* Each slide gets ~12.5% of scroll, 8 slides ≈ 100% */
-    height: 1200vh;
+    height: 1350vh;
     touch-action: pan-y;
 }
 
@@ -214,7 +214,7 @@ body {
 
 /* Alignment variants */
 .slide-left { text-align: left; }
-.slide-right { text-align: left; margin-left: auto; display: flex; justify-content: flex-end; }
+.slide-right { text-align: left; display: flex; flex-direction: column; align-items: flex-end; }
 .slide-right > * { max-width: 600px; }
 .slide-center { text-align: center; display: flex; flex-direction: column; align-items: center; }
 
@@ -732,6 +732,22 @@ body {
     margin-top: 14px;
 }
 
+.footer-contact-info {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.footer-contact-info a {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-contact-info a:hover { color: var(--accent-warm); }
+
 .footer-links {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -787,6 +803,185 @@ body {
 }
 
 .footer-legal a:hover { color: var(--text); }
+
+/* ─── PARTNER LOGO GRID ─── */
+.partner-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 28px;
+    max-width: 680px;
+    width: 100%;
+}
+
+.partner-chip {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 0.01em;
+    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+}
+
+.partner-chip:hover {
+    border-color: rgba(232, 169, 16, 0.25);
+    color: var(--text);
+    background: rgba(232, 169, 16, 0.04);
+}
+
+/* ─── ASSESSMENT MODAL ─── */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s var(--ease), visibility 0.3s var(--ease);
+}
+
+.modal-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-box {
+    background: #131313;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 36px 36px 32px;
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+    transform: translateY(24px);
+    transition: transform 0.35s var(--ease);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-overlay.open .modal-box {
+    transform: translateY(0);
+}
+
+.modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.07);
+    border: none;
+    border-radius: 50%;
+    color: var(--text-dim);
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, color 0.2s ease;
+    line-height: 1;
+}
+
+.modal-close:hover { background: rgba(255, 255, 255, 0.14); color: var(--text); }
+
+.modal-title {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: -0.025em;
+}
+
+.modal-sub {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+    line-height: 1.55;
+}
+
+.form-group {
+    margin-bottom: 14px;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 7px;
+}
+
+.form-label .optional {
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 10px;
+    padding: 11px 14px;
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    -webkit-appearance: none;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder { color: var(--text-muted); }
+
+.form-input:focus,
+.form-textarea:focus {
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 80px;
+    line-height: 1.55;
+}
+
+.form-submit {
+    width: 100%;
+    background: var(--text);
+    color: var(--bg);
+    border: none;
+    border-radius: 100px;
+    padding: 13px;
+    font-family: var(--font);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: background 0.3s var(--ease), transform 0.2s var(--ease);
+}
+
+.form-submit:hover {
+    background: var(--accent-warm);
+    transform: translateY(-1px);
+}
 
 /* ─── WHATSAPP FLOAT BUTTON ─── */
 .whatsapp-btn {
@@ -970,8 +1165,16 @@ body {
         grid-template-columns: repeat(3, 1fr);
     }
 
+    .partner-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
     .footer-links {
         grid-template-columns: 1fr;
+    }
+
+    .modal-box {
+        padding: 28px 20px 24px;
     }
 }
 
@@ -997,7 +1200,7 @@ body {
                 <a href="#" class="nav-link" data-scroll-to="0.50">Process</a>
                 <a href="#" class="nav-link" data-scroll-to="0.65">Industries</a>
                 <a href="#" class="nav-link" data-scroll-to="0.78">Impact</a>
-                <a href="#" class="nav-link nav-link-cta" data-scroll-to="0.92">Get Assessment</a>
+                <a href="#" class="nav-link nav-link-cta" data-open-modal="assessment">Get Assessment</a>
             </div>
             <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
                 <span></span><span></span>
@@ -1030,7 +1233,7 @@ body {
                     <p class="slide-sub landing-sub">Turnkey EPC Solutions · 30kW to Multi-Megawatt Deployments</p>
                     <div class="landing-cta-row">
                         <a href="#" class="btn btn-primary" data-scroll-to="0.12">Explore Solutions</a>
-                        <a href="#" class="btn btn-ghost" data-scroll-to="0.92">Request Assessment</a>
+                        <a href="#" class="btn btn-ghost" data-open-modal="assessment">Request Assessment</a>
                     </div>
                 </div>
 
@@ -1202,7 +1405,7 @@ body {
         </div>
 
         <!-- ═══════ SLIDE 7: Impact Numbers ═══════ -->
-        <div class="slide" data-enter="0.73" data-peak="0.80" data-exit="0.88">
+        <div class="slide" data-enter="0.73" data-peak="0.79" data-exit="0.86">
             <div class="slide-inner slide-center">
                 <p class="slide-label">Impact</p>
                 <h2 class="slide-title">The economics are undeniable.</h2>
@@ -1227,15 +1430,34 @@ body {
             </div>
         </div>
 
-        <!-- ═══════ SLIDE 8: Final CTA ═══════ -->
-        <div class="slide" data-enter="0.86" data-peak="0.93" data-exit="1.0">
+        <!-- ═══════ SLIDE 8: Partners ═══════ -->
+        <div class="slide" data-enter="0.84" data-peak="0.89" data-exit="0.94">
+            <div class="slide-inner slide-center">
+                <p class="slide-label">Trusted Partners</p>
+                <h2 class="slide-title">Built with Tier-1 global equipment.</h2>
+                <div class="partner-grid">
+                    <div class="partner-chip">Waaree</div>
+                    <div class="partner-chip">Adani Solar</div>
+                    <div class="partner-chip">Trina Solar</div>
+                    <div class="partner-chip">ABB</div>
+                    <div class="partner-chip">Schneider Electric</div>
+                    <div class="partner-chip">Toshiba</div>
+                    <div class="partner-chip">Luminous</div>
+                    <div class="partner-chip">Hitachi</div>
+                    <div class="partner-chip">APN Solar</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ SLIDE 9: Final CTA ═══════ -->
+        <div class="slide" data-enter="0.92" data-peak="0.96" data-exit="1.0">
             <div class="slide-inner slide-center">
                 <p class="slide-label">Get Started</p>
                 <h2 class="slide-title slide-title-large">Ready to power your<br>operations with solar?</h2>
                 <p class="slide-body slide-body-center">Book a free site assessment. Our engineering team will evaluate your facility and deliver a custom proposal within 7 business days.</p>
                 <div class="cta-row">
-                    <a href="mailto:projects@solararc.com" class="btn btn-primary btn-lg">Request Site Assessment</a>
-                    <a href="tel:+911234567890" class="btn btn-ghost btn-lg">Call Us</a>
+                    <a href="#" class="btn btn-primary btn-lg" data-open-modal="assessment">Request Site Assessment</a>
+                    <a href="tel:+917666728884" class="btn btn-ghost btn-lg">Call Us</a>
                 </div>
             </div>
         </div>
@@ -1259,6 +1481,10 @@ body {
                     <span>UrbanGrid</span>
                 </a>
                 <p>Intelligent Solar Infrastructure<br>for Commercial & Industrial Scale.</p>
+                <div class="footer-contact-info">
+                    <a href="tel:+917666728884">+91 76667 28884</a>
+                    <a href="mailto:sales@urbangrids.in">sales@urbangrids.in</a>
+                </div>
             </div>
             <div class="footer-links">
                 <div class="footer-col">
@@ -1273,7 +1499,7 @@ body {
                     <a href="#">Industries</a>
                     <a href="#">Impact</a>
                     <a href="#">Process</a>
-                    <a href="#">Contact</a>
+                    <a href="#" data-open-modal="assessment">Contact Us</a>
                 </div>
                 <div class="footer-col">
                     <h5>Models</h5>
@@ -1283,17 +1509,49 @@ body {
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 UrbanGrid Energy. All rights reserved.</p>
+            <p>&copy; 2026 UrbanGrid Energy Pvt. Ltd. All rights reserved.</p>
             <div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div>
         </div>
     </footer>
 
     <!-- WhatsApp Float Button -->
     <a href="https://wa.me/917666728884" class="whatsapp-btn" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
-        <svg viewBox="0 0 32 32" width="26" height="26" fill="currentColor" aria-hidden="true">
-            <path d="M16 0C7.163 0 0 7.163 0 16c0 2.822.736 5.474 2.027 7.773L0 32l8.456-2.01A15.934 15.934 0 0016 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333a13.28 13.28 0 01-6.778-1.852l-.487-.29-5.018 1.194 1.215-4.889-.32-.506A13.282 13.282 0 012.667 16C2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.18-9.96c-.393-.197-2.327-1.148-2.688-1.28-.362-.131-.625-.197-.888.197-.263.393-1.017 1.28-1.247 1.543-.23.263-.46.295-.853.099-.394-.197-1.662-.613-3.168-1.954-1.17-1.044-1.961-2.333-2.19-2.727-.23-.394-.025-.607.172-.803.178-.176.394-.46.591-.69.197-.23.263-.394.394-.657.131-.263.066-.493-.033-.69-.099-.197-.888-2.14-1.215-2.929-.32-.77-.644-.665-.888-.677-.23-.01-.493-.013-.757-.013s-.69.099-.951.394c-.263.295-1.017 1.017-1.017 2.48 0 1.462 1.083 2.876 1.23 3.073.148.197 2.11 3.22 5.113 4.513.714.308 1.272.492 1.707.63.717.228 1.37.196 1.887.119.575-.086 1.77-.724 2.02-1.424.25-.7.25-1.3.175-1.424-.073-.123-.27-.197-.57-.33z"/>
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
         </svg>
     </a>
+
+    <!-- Assessment Modal -->
+    <div class="modal-overlay" id="assessment-modal" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
+        <div class="modal-box">
+            <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
+            <h2 class="modal-title" id="modal-heading">Request Site Assessment</h2>
+            <p class="modal-sub">Our engineering team will evaluate your facility and deliver a custom solar proposal within 7 business days.</p>
+            <form id="assessment-form" novalidate>
+                <div class="form-group">
+                    <label class="form-label" for="f-name">Full Name</label>
+                    <input class="form-input" id="f-name" name="name" type="text" placeholder="Rajesh Kumar" required autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="f-phone">Phone Number</label>
+                    <input class="form-input" id="f-phone" name="phone" type="tel" placeholder="+91 98765 43210" required autocomplete="tel">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="f-company">Company Name</label>
+                    <input class="form-input" id="f-company" name="company" type="text" placeholder="Acme Industries Pvt. Ltd." required autocomplete="organization">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="f-location">Facility Location</label>
+                    <input class="form-input" id="f-location" name="location" type="text" placeholder="Pune, Maharashtra" required autocomplete="address-level2">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="f-query">Query Details <span class="optional">(optional)</span></label>
+                    <textarea class="form-textarea" id="f-query" name="query" placeholder="Rooftop capacity, sanctioned load, current electricity bill, or any specific requirements…"></textarea>
+                </div>
+                <button class="form-submit" type="submit">Send Assessment Request</button>
+            </form>
+        </div>
+    </div>
 
     <script>
 /* ═══════════════════════════════════════════════════
@@ -1632,6 +1890,52 @@ body {
         requestAnimationFrame(updateParallax);
     }
 
+    // ── ASSESSMENT MODAL ──
+    function setupAssessmentModal() {
+        const overlay = document.getElementById('assessment-modal');
+        if (!overlay) return;
+        const form = document.getElementById('assessment-form');
+        const closeBtn = document.getElementById('modal-close');
+
+        function openModal() {
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            overlay.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        document.querySelectorAll('[data-open-modal="assessment"]').forEach(function (el) {
+            el.addEventListener('click', function (e) { e.preventDefault(); openModal(); });
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+        overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var name = form.querySelector('[name=name]').value.trim();
+            var phone = form.querySelector('[name=phone]').value.trim();
+            var company = form.querySelector('[name=company]').value.trim();
+            var location = form.querySelector('[name=location]').value.trim();
+            var query = form.querySelector('[name=query]').value.trim();
+            var subject = encodeURIComponent('Site Assessment Request — ' + (company || name));
+            var body = encodeURIComponent(
+                'Name: ' + name +
+                '\nPhone: ' + phone +
+                '\nCompany: ' + company +
+                '\nLocation: ' + location +
+                (query ? '\n\nQuery:\n' + query : '')
+            );
+            window.open('mailto:sales@urbangrids.in?subject=' + subject + '&body=' + body);
+            closeModal();
+            form.reset();
+        });
+    }
+
     // ── INIT ──
     function init() {
         initCanvas();
@@ -1639,6 +1943,7 @@ body {
         setupNavClicks();
         setupMobileNav();
         setupMouseParallax();
+        setupAssessmentModal();
 
         // Make landing slide visible immediately
         const landing = document.getElementById('slide-landing');
