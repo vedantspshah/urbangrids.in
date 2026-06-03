@@ -808,30 +808,41 @@ body {
 .partner-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 10px 16px;
     margin-top: 28px;
-    max-width: 680px;
+    max-width: 720px;
     width: 100%;
 }
 
+.partner-col-header {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent-warm);
+    text-align: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(232, 169, 16, 0.22);
+}
+
 .partner-chip {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
-    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 12px;
+    padding: 18px 14px;
     text-align: center;
     font-family: var(--font-display);
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: var(--text-dim);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
     letter-spacing: 0.01em;
-    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+    transition: border-color 0.3s ease, background 0.3s ease, transform 0.2s ease;
 }
 
 .partner-chip:hover {
-    border-color: rgba(232, 169, 16, 0.25);
-    color: var(--text);
-    background: rgba(232, 169, 16, 0.04);
+    border-color: rgba(232, 169, 16, 0.4);
+    background: rgba(232, 169, 16, 0.06);
+    transform: translateY(-2px);
 }
 
 /* ─── ASSESSMENT MODAL ─── */
@@ -1166,7 +1177,17 @@ body {
     }
 
     .partner-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px 8px;
+    }
+
+    .partner-chip {
+        padding: 12px 8px;
+        font-size: 0.8rem;
+    }
+
+    .partner-col-header {
+        font-size: 0.55rem;
     }
 
     .footer-links {
@@ -1195,11 +1216,11 @@ body {
             </a>
             <div class="nav-links" id="nav-links">
                 <a href="#" class="nav-link" data-scroll-to="0">Home</a>
-                <a href="#" class="nav-link" data-scroll-to="0.12">Solutions</a>
-                <a href="#" class="nav-link" data-scroll-to="0.30">Models</a>
-                <a href="#" class="nav-link" data-scroll-to="0.50">Process</a>
-                <a href="#" class="nav-link" data-scroll-to="0.65">Industries</a>
-                <a href="#" class="nav-link" data-scroll-to="0.78">Impact</a>
+                <a href="#" class="nav-link" data-scroll-to="0.13">Solutions</a>
+                <a href="#" class="nav-link" data-scroll-to="0.24">Models</a>
+                <a href="#" class="nav-link" data-scroll-to="0.57">Process</a>
+                <a href="#" class="nav-link" data-scroll-to="0.68">Industries</a>
+                <a href="#" class="nav-link" data-scroll-to="0.79">Impact</a>
                 <a href="#" class="nav-link nav-link-cta" data-open-modal="assessment">Get Assessment</a>
             </div>
             <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
@@ -1221,7 +1242,7 @@ body {
         </div>
 
         <!-- ═══════ SLIDE 0: Landing Hero (visible on load) ═══════ -->
-        <div class="slide slide-landing" id="slide-landing" data-enter="-0.01" data-peak="0.02" data-exit="0.13">
+        <div class="slide slide-landing" id="slide-landing" data-enter="-0.01" data-peak="0.02" data-exit="0.12">
             <div class="slide-inner slide-landing-layout" id="landing-parallax">
                 <!-- LEFT: Main hero content -->
                 <div class="landing-left">
@@ -1232,7 +1253,7 @@ body {
                     </h1>
                     <p class="slide-sub landing-sub">Turnkey EPC Solutions · 30kW to Multi-Megawatt Deployments</p>
                     <div class="landing-cta-row">
-                        <a href="#" class="btn btn-primary" data-scroll-to="0.12">Explore Solutions</a>
+                        <a href="#" class="btn btn-primary" data-scroll-to="0.13">Explore Solutions</a>
                         <a href="#" class="btn btn-ghost" data-open-modal="assessment">Request Assessment</a>
                     </div>
                 </div>
@@ -1266,7 +1287,7 @@ body {
         </div>
 
         <!-- ═══════ SLIDE 2: What We Do ═══════ -->
-        <div class="slide" data-enter="0.14" data-peak="0.19" data-exit="0.27">
+        <div class="slide" data-enter="0.10" data-peak="0.13" data-exit="0.23">
             <div class="slide-inner slide-right">
                 <p class="slide-label">What We Do</p>
                 <h2 class="slide-title">End-to-end solar EPC.<br>Zero compromise.</h2>
@@ -1296,7 +1317,7 @@ body {
         </div>
 
         <!-- ═══════ SLIDE 3: CAPEX Model ═══════ -->
-        <div class="slide" data-enter="0.25" data-peak="0.32" data-exit="0.40">
+        <div class="slide" data-enter="0.21" data-peak="0.24" data-exit="0.34">
             <div class="slide-inner slide-left">
                 <p class="slide-label">Business Model</p>
                 <div class="model-badge-inline">CAPEX</div>
@@ -1311,8 +1332,30 @@ body {
             </div>
         </div>
 
+        <!-- ═══════ SLIDE 8: Partners ═══════ -->
+        <div class="slide" data-enter="0.32" data-peak="0.35" data-exit="0.45">
+            <div class="slide-inner slide-center">
+                <p class="slide-label">Trusted Partners</p>
+                <h2 class="slide-title">Tier-1 equipment.<br>Every project.</h2>
+                <div class="partner-grid">
+                    <div class="partner-col-header">Solar Modules</div>
+                    <div class="partner-col-header">Power Electronics</div>
+                    <div class="partner-col-header">Systems &amp; Components</div>
+                    <div class="partner-chip">Waaree</div>
+                    <div class="partner-chip">ABB</div>
+                    <div class="partner-chip">Luminous</div>
+                    <div class="partner-chip">Adani Solar</div>
+                    <div class="partner-chip">Schneider Electric</div>
+                    <div class="partner-chip">Hitachi</div>
+                    <div class="partner-chip">Trina Solar</div>
+                    <div class="partner-chip">Toshiba</div>
+                    <div class="partner-chip">APN Solar</div>
+                </div>
+            </div>
+        </div>
+
         <!-- ═══════ SLIDE 4: RESCO Model ═══════ -->
-        <div class="slide" data-enter="0.37" data-peak="0.43" data-exit="0.50">
+        <div class="slide" data-enter="0.43" data-peak="0.46" data-exit="0.57">
             <div class="slide-inner slide-right">
                 <p class="slide-label">Business Model</p>
                 <div class="model-badge-inline model-badge-accent">RESCO / OPEX</div>
@@ -1328,7 +1371,7 @@ body {
         </div>
 
         <!-- ═══════ SLIDE 5: Project Lifecycle ═══════ -->
-        <div class="slide" data-enter="0.47" data-peak="0.54" data-exit="0.63">
+        <div class="slide" data-enter="0.54" data-peak="0.57" data-exit="0.68">
             <div class="slide-inner slide-center">
                 <p class="slide-label">Process</p>
                 <h2 class="slide-title">From assessment to generation.<br>Seamlessly.</h2>
@@ -1367,7 +1410,7 @@ body {
         </div>
 
         <!-- ═══════ SLIDE 6: Industries ═══════ -->
-        <div class="slide" data-enter="0.60" data-peak="0.67" data-exit="0.76">
+        <div class="slide" data-enter="0.65" data-peak="0.68" data-exit="0.79">
             <div class="slide-inner slide-left">
                 <p class="slide-label">Industries</p>
                 <h2 class="slide-title">Built for the spaces that<br>power economies.</h2>
@@ -1405,7 +1448,7 @@ body {
         </div>
 
         <!-- ═══════ SLIDE 7: Impact Numbers ═══════ -->
-        <div class="slide" data-enter="0.73" data-peak="0.79" data-exit="0.86">
+        <div class="slide" data-enter="0.76" data-peak="0.79" data-exit="0.90">
             <div class="slide-inner slide-center">
                 <p class="slide-label">Impact</p>
                 <h2 class="slide-title">The economics are undeniable.</h2>
@@ -1430,27 +1473,8 @@ body {
             </div>
         </div>
 
-        <!-- ═══════ SLIDE 8: Partners ═══════ -->
-        <div class="slide" data-enter="0.84" data-peak="0.89" data-exit="0.94">
-            <div class="slide-inner slide-center">
-                <p class="slide-label">Trusted Partners</p>
-                <h2 class="slide-title">Built with Tier-1 global equipment.</h2>
-                <div class="partner-grid">
-                    <div class="partner-chip">Waaree</div>
-                    <div class="partner-chip">Adani Solar</div>
-                    <div class="partner-chip">Trina Solar</div>
-                    <div class="partner-chip">ABB</div>
-                    <div class="partner-chip">Schneider Electric</div>
-                    <div class="partner-chip">Toshiba</div>
-                    <div class="partner-chip">Luminous</div>
-                    <div class="partner-chip">Hitachi</div>
-                    <div class="partner-chip">APN Solar</div>
-                </div>
-            </div>
-        </div>
-
         <!-- ═══════ SLIDE 9: Final CTA ═══════ -->
-        <div class="slide" data-enter="0.92" data-peak="0.96" data-exit="1.0">
+        <div class="slide" data-enter="0.87" data-peak="0.91" data-exit="1.0">
             <div class="slide-inner slide-center">
                 <p class="slide-label">Get Started</p>
                 <h2 class="slide-title slide-title-large">Ready to power your<br>operations with solar?</h2>
@@ -1815,8 +1839,8 @@ body {
         // Nav
         updateNav(progress);
 
-        // Trigger counter animation when impact slide is visible
-        if (progress >= 0.75 && progress <= 0.88) {
+        // Trigger counter animation when impact slide is visible (slot 8: 0.76–0.90)
+        if (progress >= 0.77 && progress <= 0.90) {
             animateCounters();
         }
 
