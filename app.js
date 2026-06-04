@@ -11,6 +11,11 @@
     const TOTAL_FRAMES = 192;
     const FRAME_PATH = 'frames_hq/frame-';
     const FRAME_EXT = '.jpg';
+    // Coarse-pointer = touch/mobile device
+    const MOBILE = window.matchMedia('(pointer: coarse)').matches;
+    // Keyframe stride: load every Nth frame first so any scroll position
+    // has a nearby frame available very quickly, then fill gaps.
+    const PRELOAD_STRIDE = 24;
 
     // ── STATE ──
     const images = new Array(TOTAL_FRAMES);
@@ -18,9 +23,13 @@
     let cW, cH; // canvas logical size
     let lastDrawnIndex = -1;
     let currentProgress = 0;
+    let lastRafProgress = -1; // dirty-flag: skip DOM work when scroll hasn't moved
     let rafId = null;
     let counterAnimated = false;
     let mouseX = 0, mouseY = 0;
+
+    // Cached DOM references — populated in init() before first RAF tick
+    let scrollContainer, slideEls, canvasDim, progressFill, mainNav;
 
     // ── HELPERS ──
     function pad(n) {
@@ -48,8 +57,8 @@
     }
 
     function sizeCanvas() {
-        // Use full device pixel ratio for maximum sharpness
-        const dpr = window.devicePixelRatio || 1;
+        // Cap DPR at 2 on mobile — 3× canvas on a 192-frame sequence is unnecessary memory pressure
+        const dpr = Math.min(window.devicePixelRatio || 1, MOBILE ? 2 : 3);
         cW = window.innerWidth;
         cH = window.innerHeight;
         canvas.width = cW * dpr;
@@ -58,60 +67,15 @@
         canvas.style.height = cH + 'px';
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-        // Force redraw
+        // Force redraw after resize
         lastDrawnIndex = -1;
-        const idx = Math.round(currentProgress * (TOTAL_FRAMES - 1));
-        if (images[idx]) drawImage(idx);
+        const idx = clamp(Math.round(currentProgress * (TOTAL_FRAMES - 1)), 0, TOTAL_FRAMES - 1);
+        if (images[idx]) coverFitDraw(images[idx], idx);
     }
 
-    // ── FRAME LOADER ──
-    // Priority: load ALL frames as fast as possible, 6 concurrent
-    function preloadAllFrames() {
-        return new Promise((resolve) => {
-            let loaded = 0;
-            let nextToQueue = 0;
-            const concurrency = 8;
-
-            function loadNext() {
-                if (nextToQueue >= TOTAL_FRAMES) return;
-                const i = nextToQueue++;
-                const img = new Image();
-                img.decoding = 'async';
-                img.onload = function () {
-                    images[i] = img;
-                    loaded++;
-                    // Draw first frame immediately
-                    if (i === 0 && lastDrawnIndex === -1) {
-                        drawImage(0);
-                    }
-                    if (loaded === TOTAL_FRAMES) {
-                        resolve();
-                    } else {
-                        loadNext();
-                    }
-                };
-                img.onerror = function () {
-                    loaded++;
-                    if (loaded === TOTAL_FRAMES) resolve();
-                    else loadNext();
-                };
-                img.src = frameSrc(i);
-            }
-
-            // Kickoff concurrent loaders
-            for (let c = 0; c < concurrency; c++) {
-                loadNext();
-            }
-        });
-    }
-
-    // ── DRAW ──
-    function drawImage(index) {
-        if (index === lastDrawnIndex) return;
-        const img = images[index];
-        if (!img) return;
-
-        // Cover-fit (like CSS object-fit: cover)
+    // ── DRAW HELPERS ──
+    // Extracted so nearest-frame fallback and normal draw share the same cover-fit logic
+    function coverFitDraw(img, index) {
         const iR = img.naturalWidth / img.naturalHeight;
         const cR = cW / cH;
         let dw, dh, dx, dy;
@@ -126,30 +90,112 @@
             dx = (cW - dw) / 2;
             dy = 0;
         }
-
         ctx.drawImage(img, dx, dy, dw, dh);
         lastDrawnIndex = index;
     }
 
+    function drawImage(index) {
+        const img = images[index];
+        if (img) {
+            if (index === lastDrawnIndex) return;
+            coverFitDraw(img, index);
+            return;
+        }
+
+        // Nearest-frame fallback: on fast scroll the target frame may not be
+        // decoded yet. Rather than leaving the canvas blank, find the closest
+        // loaded frame (searching both directions simultaneously) and show it.
+        for (let d = 1; d < TOTAL_FRAMES; d++) {
+            const before = index - d;
+            const after  = index + d;
+            if (before >= 0 && images[before]) {
+                if (before === lastDrawnIndex) return;
+                coverFitDraw(images[before], before);
+                return;
+            }
+            if (after < TOTAL_FRAMES && images[after]) {
+                if (after === lastDrawnIndex) return;
+                coverFitDraw(images[after], after);
+                return;
+            }
+        }
+        // No frames loaded yet — canvas stays blank until first frame arrives
+    }
+
+    // ── FRAME LOADER ──
+    function preloadAllFrames() {
+        return new Promise(function (resolve) {
+            let loaded = 0;
+            let nextToQueue = 0;
+            // Fewer concurrent requests on mobile to avoid saturating the connection
+            const concurrency = MOBILE ? 4 : 8;
+
+            // Build priority queue: keyframes every PRELOAD_STRIDE first, then fill gaps.
+            // This ensures every ~PRELOAD_STRIDE frames there's a loaded frame to fall
+            // back to, so the nearest-frame fallback never skips far even early in load.
+            const keyframeSet = new Set();
+            for (let i = 0; i < TOTAL_FRAMES; i += PRELOAD_STRIDE) keyframeSet.add(i);
+            keyframeSet.add(TOTAL_FRAMES - 1); // always load the last frame early
+
+            const queue = [];
+            keyframeSet.forEach(function (i) { queue.push(i); });
+            for (let i = 0; i < TOTAL_FRAMES; i++) {
+                if (!keyframeSet.has(i)) queue.push(i);
+            }
+
+            function storeAndContinue(i, img) {
+                images[i] = img;
+                loaded++;
+                if (i === 0 && lastDrawnIndex === -1) drawImage(0);
+                if (loaded === TOTAL_FRAMES) {
+                    resolve();
+                } else {
+                    loadNext();
+                }
+            }
+
+            function loadNext() {
+                if (nextToQueue >= TOTAL_FRAMES) return;
+                const i = queue[nextToQueue++];
+                const img = new Image();
+                img.decoding = 'async';
+                img.onload = function () {
+                    // img.decode() ensures the image is fully decoded and GPU-ready
+                    // before we store it. Prevents brief main-thread jank on first draw.
+                    img.decode().then(
+                        function () { storeAndContinue(i, img); },
+                        function () { storeAndContinue(i, img); } // decode failed — use anyway
+                    );
+                };
+                img.onerror = function () {
+                    loaded++;
+                    if (loaded === TOTAL_FRAMES) resolve();
+                    else loadNext();
+                };
+                img.src = frameSrc(i);
+            }
+
+            for (let c = 0; c < concurrency; c++) loadNext();
+        });
+    }
+
     // ── SCROLL PROGRESS ──
     function getScrollProgress() {
-        const container = document.getElementById('scroll-container');
-        const rect = container.getBoundingClientRect();
-        const scrollable = container.offsetHeight - window.innerHeight;
+        const rect = scrollContainer.getBoundingClientRect();
+        const scrollable = scrollContainer.offsetHeight - window.innerHeight;
         if (scrollable <= 0) return 0;
         return clamp(-rect.top / scrollable, 0, 1);
     }
 
     // ── SLIDE VISIBILITY ──
     function updateSlides(progress) {
-        const slides = document.querySelectorAll('.slide');
         let maxDim = 0;
         const isLandingPhase = progress < 0.13;
 
-        slides.forEach((slide) => {
+        slideEls.forEach(function (slide) {
             const enter = parseFloat(slide.dataset.enter);
-            const peak = parseFloat(slide.dataset.peak);
-            const exit = parseFloat(slide.dataset.exit);
+            const peak  = parseFloat(slide.dataset.peak);
+            const exit  = parseFloat(slide.dataset.exit);
             const isLanding = slide.classList.contains('slide-landing');
 
             let opacity = 0;
@@ -193,12 +239,10 @@
         });
 
         // Dim the canvas for readability
-        const dim = document.getElementById('canvas-dim');
         if (isLandingPhase) {
-            // Light dim on landing for text readability
-            dim.style.background = 'rgba(0, 0, 0, 0.3)';
+            canvasDim.style.background = 'rgba(0, 0, 0, 0.3)';
         } else {
-            dim.style.background = 'rgba(0, 0, 0, ' + (maxDim * 0.55) + ')';
+            canvasDim.style.background = 'rgba(0, 0, 0, ' + (maxDim * 0.55) + ')';
         }
     }
 
@@ -207,7 +251,7 @@
         if (counterAnimated) return;
         counterAnimated = true;
 
-        document.querySelectorAll('.impact-number[data-target]').forEach((el) => {
+        document.querySelectorAll('.impact-number[data-target]').forEach(function (el) {
             const target = parseFloat(el.dataset.target);
             const decimal = parseInt(el.dataset.decimal) || 0;
             const duration = 2200;
@@ -227,17 +271,15 @@
 
     // ── PROGRESS BAR ──
     function updateProgressBar(progress) {
-        const fill = document.getElementById('progress-fill');
-        fill.style.width = (progress * 100) + '%';
+        progressFill.style.width = (progress * 100) + '%';
     }
 
     // ── NAV STATE ──
     function updateNav(progress) {
-        const nav = document.getElementById('main-nav');
         if (progress > 0.02) {
-            nav.classList.add('scrolled');
+            mainNav.classList.add('scrolled');
         } else {
-            nav.classList.remove('scrolled');
+            mainNav.classList.remove('scrolled');
         }
     }
 
@@ -246,22 +288,18 @@
         const progress = getScrollProgress();
         currentProgress = progress;
 
-        // Map progress to frame index
-        const frameIndex = Math.round(progress * (TOTAL_FRAMES - 1));
-        drawImage(clamp(frameIndex, 0, TOTAL_FRAMES - 1));
+        // Always update the canvas frame (drawImage has its own early-exit when unchanged)
+        const frameIndex = clamp(Math.round(progress * (TOTAL_FRAMES - 1)), 0, TOTAL_FRAMES - 1);
+        drawImage(frameIndex);
 
-        // Update content slides
-        updateSlides(progress);
-
-        // Progress bar
-        updateProgressBar(progress);
-
-        // Nav
-        updateNav(progress);
-
-        // Trigger counter animation when impact slide is visible (slot 8: 0.76–0.90)
-        if (progress >= 0.77 && progress <= 0.90) {
-            animateCounters();
+        // Only touch the DOM when scroll position has actually moved.
+        // Saves querySelectorAll iteration + style mutations on every tick while idle.
+        if (Math.abs(progress - lastRafProgress) > 0.00005) {
+            updateSlides(progress);
+            updateProgressBar(progress);
+            updateNav(progress);
+            if (progress >= 0.77 && progress <= 0.90) animateCounters();
+            lastRafProgress = progress;
         }
 
         rafId = requestAnimationFrame(onFrame);
@@ -269,8 +307,8 @@
 
     // ── NAV CLICK → SCROLL TO PROGRESS ──
     function setupNavClicks() {
-        document.querySelectorAll('[data-scroll-to]').forEach((link) => {
-            link.addEventListener('click', (e) => {
+        document.querySelectorAll('[data-scroll-to]').forEach(function (link) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
 
                 // Close mobile nav if open
@@ -283,8 +321,7 @@
                 }
 
                 const targetProgress = parseFloat(link.dataset.scrollTo);
-                const container = document.getElementById('scroll-container');
-                const scrollable = container.offsetHeight - window.innerHeight;
+                const scrollable = scrollContainer.offsetHeight - window.innerHeight;
                 const targetScroll = targetProgress * scrollable;
 
                 window.scrollTo({
@@ -301,7 +338,7 @@
         const links = document.getElementById('nav-links');
         if (!toggle || !links) return;
 
-        toggle.addEventListener('click', () => {
+        toggle.addEventListener('click', function () {
             toggle.classList.toggle('active');
             links.classList.toggle('open');
             document.body.style.overflow = links.classList.contains('open') ? 'hidden' : '';
@@ -311,12 +348,12 @@
     // ── MOUSE PARALLAX ──
     function setupMouseParallax() {
         // Touch-primary devices never fire mousemove — skip the forever RAF
-        if (window.matchMedia('(pointer: coarse)').matches) return;
+        if (MOBILE) return;
 
         const parallaxTarget = document.getElementById('landing-parallax');
         if (!parallaxTarget) return;
 
-        window.addEventListener('mousemove', (e) => {
+        window.addEventListener('mousemove', function (e) {
             mouseX = (e.clientX / window.innerWidth - 0.5) * 2;  // -1 to 1
             mouseY = (e.clientY / window.innerHeight - 0.5) * 2; // -1 to 1
         }, { passive: true });
@@ -462,6 +499,14 @@
 
     // ── INIT ──
     function init() {
+        // Cache DOM references before the first RAF tick fires —
+        // avoids repeated getElementById/querySelectorAll at 60fps
+        scrollContainer = document.getElementById('scroll-container');
+        slideEls = Array.from(document.querySelectorAll('.slide'));
+        canvasDim = document.getElementById('canvas-dim');
+        progressFill = document.getElementById('progress-fill');
+        mainNav = document.getElementById('main-nav');
+
         initCanvas();
         preloadAllFrames();
         setupNavClicks();

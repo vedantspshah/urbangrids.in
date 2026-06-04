@@ -808,41 +808,79 @@ body {
 .partner-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px 16px;
-    margin-top: 28px;
+    gap: 1px;
+    margin-top: 32px;
     max-width: 720px;
     width: 100%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
 }
 
 .partner-col-header {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.14em;
     color: var(--accent-warm);
     text-align: center;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(232, 169, 16, 0.22);
+    padding: 12px 8px 10px;
+    background: rgba(0, 0, 0, 0.35);
 }
 
-.partner-chip {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.13);
-    border-radius: 12px;
-    padding: 18px 14px;
-    text-align: center;
+.partner-logo-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 22px 16px;
+    background: rgba(0, 0, 0, 0.18);
+    min-height: 80px;
+    transition: background 0.3s ease;
+}
+
+.partner-logo-cell:hover {
+    background: rgba(232, 169, 16, 0.04);
+}
+
+.partner-logo-img {
+    display: block;
+    width: auto;
+    height: 52px;
+    max-width: 140px;
+    object-fit: contain;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.partner-logo-cell:hover .partner-logo-img {
+    opacity: 1;
+}
+
+.partner-logo-fallback {
+    display: none;
     font-family: var(--font-display);
-    font-size: 1rem;
+    font-size: 0.85rem;
     font-weight: 700;
-    color: var(--text);
-    letter-spacing: 0.01em;
-    transition: border-color 0.3s ease, background 0.3s ease, transform 0.2s ease;
+    color: rgba(255, 255, 255, 0.8);
+    letter-spacing: 0.02em;
+    text-align: center;
 }
 
-.partner-chip:hover {
-    border-color: rgba(232, 169, 16, 0.4);
-    background: rgba(232, 169, 16, 0.06);
-    transform: translateY(-2px);
+.partner-wordmark {
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--brand-color, rgba(255, 255, 255, 0.8));
+    letter-spacing: 0.1em;
+    text-align: center;
+    text-transform: uppercase;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.partner-logo-cell:hover .partner-wordmark {
+    opacity: 1;
 }
 
 /* ─── ASSESSMENT MODAL ─── */
@@ -1103,6 +1141,8 @@ body {
 }
 
 @media (max-width: 768px) {
+    .scroll-container { height: 1115vh; }
+
     /* ── NAV ── */
     .nav-links {
         display: none;
@@ -1241,16 +1281,26 @@ body {
 
     .partner-grid {
         grid-template-columns: repeat(3, 1fr);
-        gap: 6px 8px;
+        gap: 1px;
     }
 
-    .partner-chip {
-        padding: 12px 8px;
-        font-size: 0.8rem;
+    .partner-logo-cell {
+        padding: 16px 8px;
+        min-height: 64px;
+    }
+
+    .partner-logo-img {
+        height: 36px;
+        max-width: 100px;
+    }
+
+    .partner-logo-fallback {
+        font-size: 0.7rem;
     }
 
     .partner-col-header {
-        font-size: 0.55rem;
+        font-size: 0.5rem;
+        padding: 10px 6px 8px;
     }
 
     .footer-links {
@@ -1436,15 +1486,37 @@ body {
                     <div class="partner-col-header">Solar Modules</div>
                     <div class="partner-col-header">Power Electronics</div>
                     <div class="partner-col-header">Systems &amp; Components</div>
-                    <div class="partner-chip">Waaree</div>
-                    <div class="partner-chip">ABB</div>
-                    <div class="partner-chip">Luminous</div>
-                    <div class="partner-chip">Adani Solar</div>
-                    <div class="partner-chip">Schneider Electric</div>
-                    <div class="partner-chip">Hitachi</div>
-                    <div class="partner-chip">Trina Solar</div>
-                    <div class="partner-chip">Toshiba</div>
-                    <div class="partner-chip">APN Solar</div>
+                    <div class="partner-logo-cell">
+                        <span class="partner-wordmark" style="--brand-color: #0DB02B">Waaree</span>
+                    </div>
+                    <div class="partner-logo-cell">
+                        <img class="partner-logo-img" src="https://cdn.simpleicons.org/abb" alt="ABB" loading="lazy" decoding="async" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                        <span class="partner-logo-fallback">ABB</span>
+                    </div>
+                    <div class="partner-logo-cell">
+                        <span class="partner-wordmark" style="--brand-color: #2B6FBF">Luminous</span>
+                    </div>
+                    <div class="partner-logo-cell">
+                        <span class="partner-wordmark" style="--brand-color: #0B74B0">Adani Solar</span>
+                    </div>
+                    <div class="partner-logo-cell">
+                        <img class="partner-logo-img" src="https://cdn.simpleicons.org/schneiderelectric" alt="Schneider Electric" loading="lazy" decoding="async" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                        <span class="partner-logo-fallback">Schneider Electric</span>
+                    </div>
+                    <div class="partner-logo-cell">
+                        <img class="partner-logo-img" src="https://cdn.simpleicons.org/hitachi" alt="Hitachi" loading="lazy" decoding="async" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                        <span class="partner-logo-fallback">Hitachi</span>
+                    </div>
+                    <div class="partner-logo-cell">
+                        <span class="partner-wordmark" style="--brand-color: #0086D6">Trina Solar</span>
+                    </div>
+                    <div class="partner-logo-cell">
+                        <img class="partner-logo-img" src="https://cdn.simpleicons.org/toshiba" alt="Toshiba" loading="lazy" decoding="async" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                        <span class="partner-logo-fallback">Toshiba</span>
+                    </div>
+                    <div class="partner-logo-cell">
+                        <span class="partner-wordmark" style="--brand-color: #F5A623">APN Solar</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1720,6 +1792,8 @@ body {
     const TOTAL_FRAMES = 192;
     const FRAME_PATH = 'frames_hq/frame-';
     const FRAME_EXT = '.jpg';
+    const MOBILE = window.matchMedia('(pointer: coarse)').matches;
+    const PRELOAD_STRIDE = 24;
 
     // ── STATE ──
     const images = new Array(TOTAL_FRAMES);
@@ -1727,9 +1801,13 @@ body {
     let cW, cH; // canvas logical size
     let lastDrawnIndex = -1;
     let currentProgress = 0;
+    let lastRafProgress = -1;
     let rafId = null;
     let counterAnimated = false;
     let mouseX = 0, mouseY = 0;
+
+    // Cached DOM references
+    let scrollContainer, slideEls, canvasDim, progressFill, mainNav;
 
     // ── HELPERS ──
     function pad(n) {
@@ -1757,8 +1835,7 @@ body {
     }
 
     function sizeCanvas() {
-        // Use full device pixel ratio for maximum sharpness
-        const dpr = window.devicePixelRatio || 1;
+        const dpr = Math.min(window.devicePixelRatio || 1, MOBILE ? 2 : 3);
         cW = window.innerWidth;
         cH = window.innerHeight;
         canvas.width = cW * dpr;
@@ -1769,35 +1846,83 @@ body {
 
         // Force redraw
         lastDrawnIndex = -1;
-        const idx = Math.round(currentProgress * (TOTAL_FRAMES - 1));
-        if (images[idx]) drawImage(idx);
+        const idx = clamp(Math.round(currentProgress * (TOTAL_FRAMES - 1)), 0, TOTAL_FRAMES - 1);
+        if (images[idx]) coverFitDraw(images[idx], idx);
+    }
+
+    // ── DRAW HELPERS ──
+    function coverFitDraw(img, index) {
+        const iR = img.naturalWidth / img.naturalHeight;
+        const cR = cW / cH;
+        let dw, dh, dx, dy;
+        if (cR > iR) {
+            dw = cW; dh = cW / iR; dx = 0; dy = (cH - dh) / 2;
+        } else {
+            dh = cH; dw = cH * iR; dx = (cW - dw) / 2; dy = 0;
+        }
+        ctx.drawImage(img, dx, dy, dw, dh);
+        lastDrawnIndex = index;
+    }
+
+    function drawImage(index) {
+        const img = images[index];
+        if (img) {
+            if (index === lastDrawnIndex) return;
+            coverFitDraw(img, index);
+            return;
+        }
+        // Nearest-frame fallback: prevents blank canvas on fast scroll
+        for (let d = 1; d < TOTAL_FRAMES; d++) {
+            const before = index - d;
+            const after  = index + d;
+            if (before >= 0 && images[before]) {
+                if (before === lastDrawnIndex) return;
+                coverFitDraw(images[before], before);
+                return;
+            }
+            if (after < TOTAL_FRAMES && images[after]) {
+                if (after === lastDrawnIndex) return;
+                coverFitDraw(images[after], after);
+                return;
+            }
+        }
     }
 
     // ── FRAME LOADER ──
-    // Priority: load ALL frames as fast as possible, 6 concurrent
     function preloadAllFrames() {
-        return new Promise((resolve) => {
+        return new Promise(function (resolve) {
             let loaded = 0;
             let nextToQueue = 0;
-            const concurrency = 8;
+            const concurrency = MOBILE ? 4 : 8;
+
+            const keyframeSet = new Set();
+            for (let i = 0; i < TOTAL_FRAMES; i += PRELOAD_STRIDE) keyframeSet.add(i);
+            keyframeSet.add(TOTAL_FRAMES - 1);
+
+            const queue = [];
+            keyframeSet.forEach(function (i) { queue.push(i); });
+            for (let i = 0; i < TOTAL_FRAMES; i++) {
+                if (!keyframeSet.has(i)) queue.push(i);
+            }
+
+            function storeAndContinue(i, img) {
+                images[i] = img;
+                loaded++;
+                if (i === 0 && lastDrawnIndex === -1) drawImage(0);
+                if (loaded === TOTAL_FRAMES) resolve();
+                else loadNext();
+            }
 
             function loadNext() {
                 if (nextToQueue >= TOTAL_FRAMES) return;
-                const i = nextToQueue++;
+                const i = queue[nextToQueue++];
                 const img = new Image();
                 img.decoding = 'async';
                 img.onload = function () {
-                    images[i] = img;
-                    loaded++;
-                    // Draw first frame immediately
-                    if (i === 0 && lastDrawnIndex === -1) {
-                        drawImage(0);
-                    }
-                    if (loaded === TOTAL_FRAMES) {
-                        resolve();
-                    } else {
-                        loadNext();
-                    }
+                    img.decode().then(
+                        function () { storeAndContinue(i, img); },
+                        function () { storeAndContinue(i, img); }
+                    );
                 };
                 img.onerror = function () {
                     loaded++;
@@ -1807,55 +1932,24 @@ body {
                 img.src = frameSrc(i);
             }
 
-            // Kickoff concurrent loaders
-            for (let c = 0; c < concurrency; c++) {
-                loadNext();
-            }
+            for (let c = 0; c < concurrency; c++) loadNext();
         });
-    }
-
-    // ── DRAW ──
-    function drawImage(index) {
-        if (index === lastDrawnIndex) return;
-        const img = images[index];
-        if (!img) return;
-
-        // Cover-fit (like CSS object-fit: cover)
-        const iR = img.naturalWidth / img.naturalHeight;
-        const cR = cW / cH;
-        let dw, dh, dx, dy;
-        if (cR > iR) {
-            dw = cW;
-            dh = cW / iR;
-            dx = 0;
-            dy = (cH - dh) / 2;
-        } else {
-            dh = cH;
-            dw = cH * iR;
-            dx = (cW - dw) / 2;
-            dy = 0;
-        }
-
-        ctx.drawImage(img, dx, dy, dw, dh);
-        lastDrawnIndex = index;
     }
 
     // ── SCROLL PROGRESS ──
     function getScrollProgress() {
-        const container = document.getElementById('scroll-container');
-        const rect = container.getBoundingClientRect();
-        const scrollable = container.offsetHeight - window.innerHeight;
+        const rect = scrollContainer.getBoundingClientRect();
+        const scrollable = scrollContainer.offsetHeight - window.innerHeight;
         if (scrollable <= 0) return 0;
         return clamp(-rect.top / scrollable, 0, 1);
     }
 
     // ── SLIDE VISIBILITY ──
     function updateSlides(progress) {
-        const slides = document.querySelectorAll('.slide');
         let maxDim = 0;
         const isLandingPhase = progress < 0.13;
 
-        slides.forEach((slide) => {
+        slideEls.forEach((slide) => {
             const enter = parseFloat(slide.dataset.enter);
             const peak = parseFloat(slide.dataset.peak);
             const exit = parseFloat(slide.dataset.exit);
@@ -1902,12 +1996,10 @@ body {
         });
 
         // Dim the canvas for readability
-        const dim = document.getElementById('canvas-dim');
         if (isLandingPhase) {
-            // Light dim on landing for text readability
-            dim.style.background = 'rgba(0, 0, 0, 0.3)';
+            canvasDim.style.background = 'rgba(0, 0, 0, 0.3)';
         } else {
-            dim.style.background = 'rgba(0, 0, 0, ' + (maxDim * 0.55) + ')';
+            canvasDim.style.background = 'rgba(0, 0, 0, ' + (maxDim * 0.55) + ')';
         }
     }
 
@@ -1936,17 +2028,15 @@ body {
 
     // ── PROGRESS BAR ──
     function updateProgressBar(progress) {
-        const fill = document.getElementById('progress-fill');
-        fill.style.width = (progress * 100) + '%';
+        progressFill.style.width = (progress * 100) + '%';
     }
 
     // ── NAV STATE ──
     function updateNav(progress) {
-        const nav = document.getElementById('main-nav');
         if (progress > 0.02) {
-            nav.classList.add('scrolled');
+            mainNav.classList.add('scrolled');
         } else {
-            nav.classList.remove('scrolled');
+            mainNav.classList.remove('scrolled');
         }
     }
 
@@ -1955,22 +2045,16 @@ body {
         const progress = getScrollProgress();
         currentProgress = progress;
 
-        // Map progress to frame index
-        const frameIndex = Math.round(progress * (TOTAL_FRAMES - 1));
-        drawImage(clamp(frameIndex, 0, TOTAL_FRAMES - 1));
+        const frameIndex = clamp(Math.round(progress * (TOTAL_FRAMES - 1)), 0, TOTAL_FRAMES - 1);
+        drawImage(frameIndex);
 
-        // Update content slides
-        updateSlides(progress);
-
-        // Progress bar
-        updateProgressBar(progress);
-
-        // Nav
-        updateNav(progress);
-
-        // Trigger counter animation when impact slide is visible (slot 8: 0.76–0.90)
-        if (progress >= 0.77 && progress <= 0.90) {
-            animateCounters();
+        // Only touch the DOM when scroll position has actually moved
+        if (Math.abs(progress - lastRafProgress) > 0.00005) {
+            updateSlides(progress);
+            updateProgressBar(progress);
+            updateNav(progress);
+            if (progress >= 0.77 && progress <= 0.90) animateCounters();
+            lastRafProgress = progress;
         }
 
         rafId = requestAnimationFrame(onFrame);
@@ -1992,8 +2076,7 @@ body {
                 }
 
                 const targetProgress = parseFloat(link.dataset.scrollTo);
-                const container = document.getElementById('scroll-container');
-                const scrollable = container.offsetHeight - window.innerHeight;
+                const scrollable = scrollContainer.offsetHeight - window.innerHeight;
                 const targetScroll = targetProgress * scrollable;
 
                 window.scrollTo({
@@ -2020,7 +2103,7 @@ body {
     // ── MOUSE PARALLAX ──
     function setupMouseParallax() {
         // Touch-primary devices never fire mousemove — skip the forever RAF
-        if (window.matchMedia('(pointer: coarse)').matches) return;
+        if (MOBILE) return;
 
         const parallaxTarget = document.getElementById('landing-parallax');
         if (!parallaxTarget) return;
@@ -2171,6 +2254,12 @@ body {
 
     // ── INIT ──
     function init() {
+        scrollContainer = document.getElementById('scroll-container');
+        slideEls = Array.from(document.querySelectorAll('.slide'));
+        canvasDim = document.getElementById('canvas-dim');
+        progressFill = document.getElementById('progress-fill');
+        mainNav = document.getElementById('main-nav');
+
         initCanvas();
         preloadAllFrames();
         setupNavClicks();

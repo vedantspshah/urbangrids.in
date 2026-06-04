@@ -796,41 +796,82 @@ body {
 .partner-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px 16px;
-    margin-top: 28px;
+    /* 1px gap + container background = hairline dividers between cells */
+    gap: 1px;
+    margin-top: 32px;
     max-width: 720px;
     width: 100%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
 }
 
 .partner-col-header {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.14em;
     color: var(--accent-warm);
     text-align: center;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(232, 169, 16, 0.22);
+    padding: 12px 8px 10px;
+    background: rgba(0, 0, 0, 0.35);
 }
 
-.partner-chip {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.13);
-    border-radius: 12px;
-    padding: 18px 14px;
-    text-align: center;
+.partner-logo-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 22px 16px;
+    background: rgba(0, 0, 0, 0.18);
+    min-height: 80px;
+    transition: background 0.3s ease;
+}
+
+.partner-logo-cell:hover {
+    background: rgba(232, 169, 16, 0.04);
+}
+
+.partner-logo-img {
+    display: block;
+    width: auto;
+    height: 52px;
+    max-width: 140px;
+    object-fit: contain;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.partner-logo-cell:hover .partner-logo-img {
+    opacity: 1;
+}
+
+/* Shown via onerror when a logo CDN can't serve the image */
+.partner-logo-fallback {
+    display: none;
     font-family: var(--font-display);
-    font-size: 1rem;
+    font-size: 0.85rem;
     font-weight: 700;
-    color: var(--text);
-    letter-spacing: 0.01em;
-    transition: border-color 0.3s ease, background 0.3s ease, transform 0.2s ease;
+    color: rgba(255, 255, 255, 0.8);
+    letter-spacing: 0.02em;
+    text-align: center;
 }
 
-.partner-chip:hover {
-    border-color: rgba(232, 169, 16, 0.4);
-    background: rgba(232, 169, 16, 0.06);
-    transform: translateY(-2px);
+/* Always-visible wordmark — brand color via CSS custom property set inline */
+.partner-wordmark {
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--brand-color, rgba(255, 255, 255, 0.8));
+    letter-spacing: 0.1em;
+    text-align: center;
+    text-transform: uppercase;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.partner-logo-cell:hover .partner-wordmark {
+    opacity: 1;
 }
 
 /* ─── ASSESSMENT MODAL ─── */
@@ -1091,6 +1132,11 @@ body {
 }
 
 @media (max-width: 768px) {
+    /* ── SCROLL DISTANCE — 1350vh is 13.5 screen heights on desktop.
+       On mobile (667px screen) that's ~9000px of scrolling. Halving it
+       keeps the slide timing fractions identical but cuts scroll effort. ── */
+    .scroll-container { height: 1115vh; }
+
     /* ── NAV ── */
     .nav-links {
         display: none;
@@ -1229,16 +1275,26 @@ body {
 
     .partner-grid {
         grid-template-columns: repeat(3, 1fr);
-        gap: 6px 8px;
+        gap: 1px;
     }
 
-    .partner-chip {
-        padding: 12px 8px;
-        font-size: 0.8rem;
+    .partner-logo-cell {
+        padding: 16px 8px;
+        min-height: 64px;
+    }
+
+    .partner-logo-img {
+        height: 36px;
+        max-width: 100px;
+    }
+
+    .partner-logo-fallback {
+        font-size: 0.7rem;
     }
 
     .partner-col-header {
-        font-size: 0.55rem;
+        font-size: 0.5rem;
+        padding: 10px 6px 8px;
     }
 
     .footer-links {
