@@ -1279,28 +1279,58 @@ body {
         grid-template-columns: repeat(3, 1fr);
     }
 
+    /* Partners: reflow to category sections on mobile */
     .partner-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 1px;
+        max-width: 100%;
+        margin-top: 24px;
+    }
+
+    /* Category headers span full width, stacked above their logos */
+    .partner-grid > .partner-col-header:nth-child(1) { grid-column: 1 / -1; grid-row: 1; }
+    .partner-grid > .partner-col-header:nth-child(2) { grid-column: 1 / -1; grid-row: 3; }
+    .partner-grid > .partner-col-header:nth-child(3) { grid-column: 1 / -1; grid-row: 5; }
+
+    /* Solar Modules logos → row 2 */
+    .partner-grid > *:nth-child(4)  { grid-column: 1; grid-row: 2; }
+    .partner-grid > *:nth-child(7)  { grid-column: 2; grid-row: 2; }
+    .partner-grid > *:nth-child(10) { grid-column: 3; grid-row: 2; }
+
+    /* Power Electronics logos → row 4 */
+    .partner-grid > *:nth-child(5)  { grid-column: 1; grid-row: 4; }
+    .partner-grid > *:nth-child(8)  { grid-column: 2; grid-row: 4; }
+    .partner-grid > *:nth-child(11) { grid-column: 3; grid-row: 4; }
+
+    /* Systems & Components logos → row 6 */
+    .partner-grid > *:nth-child(6)  { grid-column: 1; grid-row: 6; }
+    .partner-grid > *:nth-child(9)  { grid-column: 2; grid-row: 6; }
+    .partner-grid > *:nth-child(12) { grid-column: 3; grid-row: 6; }
+
+    .partner-col-header {
+        font-size: 0.65rem;
+        padding: 11px 14px 9px;
+        text-align: left;
+        letter-spacing: 0.12em;
     }
 
     .partner-logo-cell {
         padding: 16px 8px;
-        min-height: 64px;
+        min-height: 68px;
     }
 
     .partner-logo-img {
-        height: 36px;
-        max-width: 100px;
+        height: 30px;
+        max-width: 80px;
     }
 
     .partner-logo-fallback {
-        font-size: 0.7rem;
+        font-size: 0.72rem;
     }
 
-    .partner-col-header {
-        font-size: 0.5rem;
-        padding: 10px 6px 8px;
+    .partner-wordmark {
+        font-size: 0.88rem;
+        letter-spacing: 0.08em;
     }
 
     .footer-links {
@@ -1340,6 +1370,25 @@ body {
 
     .form-textarea {
         min-height: 68px;
+    }
+}
+
+@media (max-width: 360px) {
+    .partner-wordmark {
+        font-size: 0.74rem;
+        letter-spacing: 0.06em;
+    }
+    .partner-logo-img {
+        height: 26px;
+        max-width: 68px;
+    }
+    .partner-col-header {
+        font-size: 0.6rem;
+        padding: 9px 12px 7px;
+    }
+    .partner-logo-cell {
+        min-height: 60px;
+        padding: 14px 6px;
     }
 }
 
