@@ -1319,16 +1319,18 @@ body {
         min-height: 68px;
     }
 
+    /* On mobile, hide SVG images — use text wordmarks for all logos */
     .partner-logo-img {
-        width: 80px;
-        height: 28px;
-        max-width: 80px;
-        object-fit: contain;
-        object-position: center;
+        display: none;
     }
 
     .partner-logo-fallback {
-        font-size: 0.72rem;
+        display: block;
+        font-size: 0.88rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        opacity: 0.88;
     }
 
     .partner-wordmark {
@@ -1377,15 +1379,10 @@ body {
 }
 
 @media (max-width: 360px) {
-    .partner-wordmark {
+    .partner-wordmark,
+    .partner-logo-fallback {
         font-size: 0.74rem;
         letter-spacing: 0.06em;
-    }
-    .partner-logo-img {
-        width: 68px;
-        height: 24px;
-        max-width: 68px;
-        object-fit: contain;
     }
     .partner-col-header {
         font-size: 0.6rem;
@@ -1545,7 +1542,7 @@ body {
                     </div>
                     <div class="partner-logo-cell">
                         <img class="partner-logo-img" src="https://cdn.simpleicons.org/abb" alt="ABB" loading="lazy" decoding="async" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                        <span class="partner-logo-fallback">ABB</span>
+                        <span class="partner-logo-fallback" style="color: #FF0000">ABB</span>
                     </div>
                     <div class="partner-logo-cell">
                         <span class="partner-wordmark" style="--brand-color: #2B6FBF">Luminous</span>
@@ -1555,7 +1552,7 @@ body {
                     </div>
                     <div class="partner-logo-cell">
                         <img class="partner-logo-img" src="https://cdn.simpleicons.org/schneiderelectric" alt="Schneider Electric" loading="lazy" decoding="async" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                        <span class="partner-logo-fallback">Schneider Electric</span>
+                        <span class="partner-logo-fallback" style="color: #3DCD58">Schneider Electric</span>
                     </div>
                     <div class="partner-logo-cell">
                         <img class="partner-logo-img" src="https://cdn.simpleicons.org/hitachi" alt="Hitachi" loading="lazy" decoding="async" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
